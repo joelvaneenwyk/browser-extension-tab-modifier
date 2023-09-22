@@ -103,7 +103,6 @@
         "allowUrlComments": true,
         "allowRegex": true
     },
-    "requireCapitalizedConstructors": true,
     "safeContextKeyword": ["that", "self"],
     "disallowYodaConditions": true,
     "requireSpaceAfterLineComment": false,
