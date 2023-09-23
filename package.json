@@ -11,7 +11,12 @@
   "bugs": {
     "url": "https://github.com/sylouuu/chrome-tab-modifier/issues"
   },
-  "devDependencies": {
+  "scripts": {
+    "build": "yarn node build.js"
+  },
+  "dependencies": {
+    "@types/gulp": "^4.0.14",
+    "@yarnpkg/sdks": "^3.0.0-rc.51",
     "angular": "~1.6.0",
     "angular-animate": "~1.6.0",
     "angular-aria": "~1.6.0",
@@ -28,6 +33,7 @@
     "gulp-minify-html": "~1.0.0",
     "gulp-rename": "~1.2.0",
     "gulp-uglify": "~3.0.0",
+    "gulp-yarn": "^4.0.1",
     "jasmine-core": "~3.1.0",
     "jshint": "~2.9.0",
     "karma": "~2.0.0",
@@ -40,5 +46,14 @@
     "phantomjs-prebuilt": "~2.1.0",
     "yargs": "~11.0.0"
   },
-  "packageManager": "yarn@3.6.3"
+  "packageManager": "yarn@3.6.3",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.4.0",
+    "eslint": "^8.0.1",
+    "eslint-config-standard-with-typescript": "latest",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
+    "eslint-plugin-promise": "^6.0.0",
+    "typescript": "*"
+  }
 }
