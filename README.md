@@ -2,8 +2,8 @@
 
 Take control of your tabs.
 
-[![Build Status](http://img.shields.io/travis/sylouuu/chrome-tab-modifier.svg?style=flat)](https://travis-ci.org/sylouuu/chrome-tab-modifier)
-[![devDependency Status](http://img.shields.io/david/dev/sylouuu/chrome-tab-modifier.svg?style=flat)](https://david-dm.org/sylouuu/chrome-tab-modifier#info=devDependencies)
+[![Build Status](http://img.shields.io/travis/joelvaneenwyk/browser-extension-tab-modifier.svg?style=flat)](https://travis-ci.org/joelvaneenwyk/browser-extension-tab-modifier)
+[![devDependency Status](http://img.shields.io/david/dev/joelvaneenwyk/browser-extension-tab-modifier.svg?style=flat)](https://david-dm.org/joelvaneenwyk/browser-extension-tab-modifier#info=devDependencies)
 
 ## Features
 
@@ -42,7 +42,7 @@ Install from the **[Chrome Web Store](https://chrome.google.com/webstore/detail/
 
 Also available for **[Opera Browser](https://addons.opera.com/fr/extensions/details/tab-modifier/)**.
 
-Not available for **Firefox**, refer to [#46](https://github.com/sylouuu/chrome-tab-modifier/issues/46).
+Not available for **Firefox**, refer to [#46](https://github.com/joelvaneenwyk/browser-extension-tab-modifier/issues/46).
 
 ## Usage
 
@@ -99,7 +99,7 @@ Disguise GitHub as Google
 * **Detection**: Contains
 * **URL fragment**: github.com
 * **Title**: Google
-* **Icon**: https://www.google.com/favicon.ico
+* **Icon**: <https://www.google.com/favicon.ico>
 
 Prevent accidental tab closure:
 
@@ -122,7 +122,7 @@ Set blank icon on Pinterest:
 Get only one GMail tab opened at once:
 
 * **Detection**: Starts with
-* **URL fragment**: https://mail.google.com
+* **URL fragment**: <https://mail.google.com>
 * **Unique**: ON
 
 Pin all PNG images (useless):
@@ -138,7 +138,7 @@ Customize title with HTML selector and Regexp:
 * **Title**: {title} | $2 by $1
 * **URL matcher**: github[.]com/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)
 
-Tab title will be: "sylouuu/chrome-tab-modifier: Take control of your tabs | chrome-tab-modifier by sylouuu"
+Tab title will be: "joelvaneenwyk/browser-extension-tab-modifier: Take control of your tabs | chrome-tab-modifier by joelvaneenwyk"
 
 Match GitHub repositories:
 
@@ -154,7 +154,7 @@ Customize GMail title with Title matcher and URL matcher:
 * **Title matcher**: [a-z]*@gmail.com
 * **URL matcher**: [a-z]*.google.com
 
-Tab title will be: "youremail@gmail.com | mail.google.com"
+Tab title will be: "<youremail@gmail.com> | mail.google.com"
 
 Github final path as title for blobs:
 
@@ -172,7 +172,7 @@ And now, build your own... :muscle:
 
 ### Local icon path doesn't work
 
-Related issue: [#5](https://github.com/sylouuu/chrome-tab-modifier/issues/5)
+Related issue: [#5](https://github.com/joelvaneenwyk/browser-extension-tab-modifier/issues/5)
 
 Due to browser security restrictions, this path won't work: `file://<path>/icon.png`.
 Your icon will not be shown by Chrome.
@@ -183,25 +183,25 @@ Another solution consists in transform your image in the [Data URI format](https
 
 ### Chrome system pages `chrome://`
 
-Related issues: [#11](https://github.com/sylouuu/chrome-tab-modifier/issues/11), [#14](https://github.com/sylouuu/chrome-tab-modifier/issues/14)
+Related issues: [#11](https://github.com/joelvaneenwyk/browser-extension-tab-modifier/issues/11), [#14](https://github.com/joelvaneenwyk/browser-extension-tab-modifier/issues/14)
 
 Pages that start with `chrome://` URL are protected. No content script can be injected then Tab Modifier will not work on these pages.
 
 ### Local files `file:///`
 
-Related issue: [#13](https://github.com/sylouuu/chrome-tab-modifier/issues/13)
+Related issue: [#13](https://github.com/joelvaneenwyk/browser-extension-tab-modifier/issues/13)
 
 By default, extensions don't have access to local files. You have to opt-in "Allow access to file URLs" from `chrome://extensions/?id=hcbgadmbdkiilgpifjgcakjehmafcjai`.
 
 ### Protected action is not triggered
 
-Related issue: [#95](https://github.com/sylouuu/chrome-tab-modifier/issues/95)
+Related issue: [#95](https://github.com/joelvaneenwyk/browser-extension-tab-modifier/issues/95)
 
 Since Chrome 90, the JS event that triggers a refresh or a closure has been reworked. See related issue.
 
 ## Changelog
 
-See [releases](https://github.com/sylouuu/chrome-tab-modifier/releases) section.
+See [releases](https://github.com/joelvaneenwyk/browser-extension-tab-modifier/releases) section.
 
 ## Development
 

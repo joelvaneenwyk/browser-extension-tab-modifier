@@ -1,11 +1,11 @@
 var app = angular.module('TabModifier', ['ngRoute', 'ngAnimate', 'ngAria', 'ngMaterial', 'angular-google-analytics', 'ui.tree']);
 
 app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdThemingProvider', 'AnalyticsProvider', function ($routeProvider, $compileProvider, $mdIconProvider, $mdThemingProvider, AnalyticsProvider) {
-    
+
     // Allow "chrome-extension" protocol
     $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|chrome-extension|file|blob):/);
     $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|chrome-extension|file|blob):|data:image\//);
-    
+
     // Load icons list by name
     $mdIconProvider
         .icon('menu', '/icons/menu.svg')
@@ -36,7 +36,7 @@ app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdTheming
         .icon('credit-card', '/icons/credit-card.svg')
         .icon('swap-vertical', '/icons/swap-vertical.svg')
         .icon('bell-ring-outline', '/icons/bell-ring-outline.svg');
-    
+
     // Configure default theme
     $mdThemingProvider
         .theme('default')
@@ -49,12 +49,12 @@ app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdTheming
         .warnPalette('red', {
             default: 'A700'
         });
-    
+
     // Analytics config
     AnalyticsProvider.setAccount('UA-27524593-7');
     AnalyticsProvider.setHybridMobileSupport(true);
     AnalyticsProvider.setDomainName('none');
-    
+
     var routes = {
         '/settings': {
             templateUrl: '/html/settings.html',
@@ -69,41 +69,41 @@ app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdTheming
             controller: 'TabRulesController'
         }
     };
-    
+
     for (var path in routes) {
         if (routes.hasOwnProperty(path)) {
             $routeProvider.when(path, routes[path]);
         }
     }
-    
+
 }]);
 
 app.run(['$rootScope', '$location', 'Analytics', function ($rootScope, $location, Analytics) {
-    
+
     $rootScope.location = $location;
-    
+
 }]);
 
 app.controller('HelpController', function () {
-    
+
 });
 
 app.controller('MainController', ['$scope', '$mdSidenav', '$q', 'Analytics', function ($scope, $mdSidenav, $q, Analytics) {
-    
+
     $scope.toggleSideNav = function () {
         $mdSidenav('aside-left').toggle();
-        
+
         Analytics.trackEvent('sidenav', 'toggle');
     };
-    
+
     $scope.closeSideNav = function () {
         if ($mdSidenav('aside-left').isOpen() === true) {
             $mdSidenav('aside-left').close();
-            
+
             Analytics.trackEvent('sidenav', 'close');
         }
     };
-    
+
 }]);
 
 app.controller('SettingsController', ['$scope', '$mdDialog', '$mdToast', '$location', 'TabModifier', 'Analytics', function ($scope, $mdDialog, $mdToast, $location, TabModifier, Analytics) {
@@ -217,45 +217,45 @@ app.controller('SettingsController', ['$scope', '$mdDialog', '$mdToast', '$locat
 }]);
 
 app.controller('TabRulesController', ['$scope', '$routeParams', '$http', '$mdDialog', '$mdMedia', '$mdToast', 'Rule', 'TabModifier', 'Analytics', function ($scope, $routeParams, $http, $mdDialog, $mdMedia, $mdToast, Rule, TabModifier, Analytics) {
-    
+
     var tab_modifier = new TabModifier(), icon_list = [];
-    
+
     // Load icon list
     $http.get('/js/icons.min.json').then(function (request) {
         icon_list = request.data;
     });
-    
+
     // Avoid BC break
     chrome.storage.sync.get('tab_modifier', function (items) {
         if (items.tab_modifier !== undefined && items.tab_modifier !== null) {
             tab_modifier.build(items.tab_modifier);
             tab_modifier.sync();
         }
-        
+
         chrome.storage.sync.clear();
     });
-    
+
     // Table options (events)
     $scope.tree_options = {
         dropped: function () {
             tab_modifier.sync();
         }
     };
-    
+
     chrome.storage.local.get('tab_modifier', function (items) {
         if (items.tab_modifier !== undefined) {
             tab_modifier.build(items.tab_modifier);
         }
-        
+
         $scope.tab_modifier = tab_modifier;
-        
+
         $scope.$apply();
     });
-    
+
     // Show modal form
     $scope.showForm = function (evt, rule) {
         var index = (rule === undefined) ? null : tab_modifier.rules.indexOf(rule);
-        
+
         $mdDialog.show({
             controller: 'FormModalController',
             templateUrl: '../html/form.html',
@@ -273,9 +273,9 @@ app.controller('TabRulesController', ['$scope', '$routeParams', '$http', '$mdDia
         }).then(function (rule) {
             // Save a rule
             tab_modifier.save(rule, index);
-            
+
             tab_modifier.sync();
-            
+
             $mdToast.show(
                 $mdToast.simple()
                     .textContent('Your rule has been successfully saved')
@@ -285,20 +285,20 @@ app.controller('TabRulesController', ['$scope', '$routeParams', '$http', '$mdDia
             Analytics.trackEvent('tab-rules', 'close-form');
         });
     };
-    
+
     // Duplicate a rule
     $scope.duplicate = function (rule) {
         tab_modifier.save(new Rule(angular.copy(rule)));
-        
+
         tab_modifier.sync();
-        
+
         $mdToast.show(
             $mdToast.simple()
                 .textContent('Your rule has been successfully duplicated')
                 .position('top right')
         );
     };
-    
+
     // Delete a rule
     $scope.delete = function (evt, rule) {
         var confirm = $mdDialog
@@ -310,12 +310,12 @@ app.controller('TabRulesController', ['$scope', '$routeParams', '$http', '$mdDia
             .targetEvent(evt)
             .ok('Delete')
             .cancel('Cancel');
-        
+
         $mdDialog.show(confirm).then(function () {
             tab_modifier.removeRule(rule);
-            
+
             tab_modifier.sync();
-            
+
             $mdToast.show(
                 $mdToast.simple()
                     .textContent('Your rule has been successfully deleted')
@@ -323,19 +323,19 @@ app.controller('TabRulesController', ['$scope', '$routeParams', '$http', '$mdDia
             );
         });
     };
-    
+
     // Get icon URL for the table
     $scope.getIconUrl = function (icon) {
         if (icon === null) {
             return null;
         }
-        
+
         return (/^(https?|data):/.test(icon) === true) ? icon : chrome.extension.getURL('/img/' + icon);
     };
-    
+
     // --------------------------------------------------------------------------------------------------------
     // Events
-    
+
     // New install
     if ($routeParams.event === 'install') {
         var confirm = $mdDialog
@@ -347,16 +347,16 @@ app.controller('TabRulesController', ['$scope', '$routeParams', '$http', '$mdDia
             .targetEvent()
             .ok('Create my first rule')
             .cancel('Close');
-        
+
         $mdDialog.show(confirm).then(function () {
             Analytics.trackEvent('greetings-dialog', 'close');
-            
+
             $scope.showForm();
         }, function () {
             Analytics.trackEvent('greetings-dialog', 'show-form');
         });
     }
-    
+
     // New version
     if ($routeParams.event === 'update' && $routeParams.version !== undefined) {
         $mdToast.show({
@@ -369,66 +369,66 @@ app.controller('TabRulesController', ['$scope', '$routeParams', '$http', '$mdDia
             }
         });
     }
-    
+
 }]);
 
 app.controller('ToastNewVersionController', ['$scope', '$location', '$mdToast', 'version', function ($scope, $location, $mdToast, version) {
     $scope.version = version;
-    
+
     $scope.closeToast = function () {
         $mdToast.hide().then(function () {
             $location.path('/');
         });
     };
-    
+
     $scope.openGitHubReleases = function () {
-        chrome.tabs.create({ url: 'https://github.com/sylouuu/chrome-tab-modifier/releases' });
-        
+        chrome.tabs.create({ url: 'https://github.com/joelvaneenwyk/browser-extension-tab-modifier/releases' });
+
         $scope.closeToast();
     };
 }]);
 
 app.controller('FormModalController', ['$scope', '$mdDialog', 'rule', 'icon_list', function ($scope, $mdDialog, rule, icon_list) {
-    
-    $scope.rule      = rule;
+
+    $scope.rule = rule;
     $scope.icon_list = icon_list;
-    
+
     $scope.$watch('rule.url_fragment', function () {
         if (rule.url_fragment === '' || rule.url_fragment === undefined) {
             rule.setModel({ url_fragment: null });
         }
     });
-    
+
     $scope.$watch('rule.tab.title', function () {
         if (rule.tab.title === '' || rule.tab.title === undefined) {
             rule.tab.title = null;
         }
     });
-    
+
     $scope.$watch('rule.tab.icon', function () {
         if (rule.tab.icon === '' || rule.tab.title === undefined) {
             rule.tab.icon = null;
         }
     });
-    
+
     $scope.$watch('rule.tab.url_matcher', function () {
         if (rule.tab.url_matcher === '' || rule.tab.url_matcher === undefined) {
             rule.tab.url_matcher = null;
         }
     });
-    
+
     $scope.closeForm = function () {
         $mdDialog.cancel();
     };
-    
+
     $scope.clearIcon = function () {
         rule.tab.icon = null;
     };
-    
+
     $scope.save = function (rule) {
         $mdDialog.hide(rule);
     };
-    
+
 }]);
 
 app.directive('inputFileButton', function () {
@@ -436,10 +436,10 @@ app.directive('inputFileButton', function () {
         restrict: 'E',
         link: function (scope, elem) {
             var button = elem.find('button'),
-                input  = elem.find('input');
-            
+                input = elem.find('input');
+
             input.css({ display: 'none' });
-            
+
             button.bind('click', function () {
                 input[0].click();
             });
@@ -453,10 +453,10 @@ app.directive('onReadFile', ['$parse', function ($parse) {
         scope: false,
         link: function (scope, element, attrs) {
             var fn = $parse(attrs.onReadFile);
-            
+
             element.on('change', function (onChangeEvent) {
                 var reader = new FileReader();
-                
+
                 reader.onload = function (onLoadEvent) {
                     scope.$apply(function () {
                         fn(scope, {
@@ -464,7 +464,7 @@ app.directive('onReadFile', ['$parse', function ($parse) {
                         });
                     });
                 };
-                
+
                 reader.readAsText((onChangeEvent.srcElement || onChangeEvent.target).files[0]);
             });
         }
@@ -472,12 +472,12 @@ app.directive('onReadFile', ['$parse', function ($parse) {
 }]);
 
 app.factory('Rule', function () {
-    
+
     var Rule = function (properties) {
-        this.name         = null;
-        this.detection    = 'CONTAINS';
+        this.name = null;
+        this.detection = 'CONTAINS';
         this.url_fragment = null;
-        this.tab          = {
+        this.tab = {
             title: null,
             icon: null,
             pinned: false,
@@ -487,41 +487,41 @@ app.factory('Rule', function () {
             title_matcher: null,
             url_matcher: null
         };
-        
+
         angular.extend(this, properties);
     };
-    
+
     Rule.prototype.setModel = function (obj) {
         angular.extend(this, obj);
     };
-    
+
     return Rule;
-    
+
 });
 
 app.factory('TabModifier', ['Rule', function (Rule) {
-    
+
     var TabModifier = function (properties) {
         this.settings = {
             enable_new_version_notification: false
         };
-        this.rules    = [];
-        
+        this.rules = [];
+
         angular.extend(this, properties);
     };
-    
+
     TabModifier.prototype.setModel = function (obj) {
         angular.extend(this, obj);
     };
-    
+
     TabModifier.prototype.addRule = function (rule) {
         this.rules.push(rule);
     };
-    
+
     TabModifier.prototype.removeRule = function (rule) {
         this.rules.splice(this.rules.indexOf(rule), 1);
     };
-    
+
     TabModifier.prototype.save = function (rule, index) {
         if (index === null || index === undefined) {
             this.addRule(rule);
@@ -533,7 +533,7 @@ app.factory('TabModifier', ['Rule', function (Rule) {
     TabModifier.prototype.build = function (data, replace_existing_rules) {
         replace_existing_rules = typeof replace_existing_rules !== 'undefined' ? replace_existing_rules : true;
         var self = this;
-        
+
         if (data.settings !== undefined) {
             this.settings = data.settings;
         }
@@ -546,23 +546,23 @@ app.factory('TabModifier', ['Rule', function (Rule) {
             self.addRule(new Rule(rule));
         });
     };
-    
+
     TabModifier.prototype.sync = function () {
         chrome.storage.local.set({ tab_modifier: this });
     };
-    
+
     TabModifier.prototype.checkFileBeforeImport = function (json) {
         if (json !== undefined) {
             try {
                 var settings = JSON.parse(json);
-                
+
                 if ('rules' in settings === false) {
                     return 'INVALID_SETTINGS';
                 }
             } catch (e) {
                 return 'INVALID_JSON_FORMAT';
             }
-            
+
             return true;
         } else {
             return false;
@@ -573,22 +573,22 @@ app.factory('TabModifier', ['Rule', function (Rule) {
         replace_existing_rules = typeof replace_existing_rules !== 'undefined' ? replace_existing_rules : true;
 
         this.build(JSON.parse(json), replace_existing_rules);
-        
+
         return this;
     };
-    
+
     TabModifier.prototype.export = function () {
         var blob = new Blob([JSON.stringify(this, null, 4)], { type: 'text/plain' });
-        
+
         return (window.URL || window.webkitURL).createObjectURL(blob);
     };
-    
+
     TabModifier.prototype.deleteRules = function () {
         this.setModel({ rules: [] });
-        
+
         return this;
     };
-    
+
     return TabModifier;
-    
+
 }]);
