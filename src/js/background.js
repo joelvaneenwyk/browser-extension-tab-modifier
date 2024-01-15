@@ -8,14 +8,19 @@ const options_url = chrome.extension.getURL('html/options.html');
 const openOptionsPage = function (hash) {
     chrome.tabs.query({ url: options_url }, function (tabs) {
         if (tabs.length > 0) {
-            chrome.tabs.update(tabs[0].id, { active: true, highlighted: true }, function (current_tab) {
-                chrome.windows.update(current_tab.windowId, {
-                    focused: true,
-                });
-            });
+            chrome.tabs.update(
+                tabs[0].id,
+                { active: true, highlighted: true },
+                function (current_tab) {
+                    chrome.windows.update(current_tab.windowId, {
+                        focused: true,
+                    });
+                },
+            );
         } else {
             chrome.tabs.create({
-                url: hash !== undefined ? options_url + '#' + hash : options_url,
+                url:
+                    hash !== undefined ? options_url + '#' + hash : options_url,
             });
         }
     });
@@ -45,7 +50,10 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
                     for (let i = 0; i < tabs.length; i++) {
                         tab = tabs[i];
 
-                        if (tab.url.indexOf(message.url_fragment) !== -1 && tab.id !== current_tab.id) {
+                        if (
+                            tab.url.indexOf(message.url_fragment) !== -1 &&
+                            tab.id !== current_tab.id
+                        ) {
                             tab_id = tab.id;
 
                             chrome.tabs.executeScript(
@@ -60,7 +68,7 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
                                         url: current_tab.url,
                                         highlighted: true,
                                     });
-                                }
+                                },
                             );
                         }
                     }
@@ -91,16 +99,23 @@ chrome.runtime.onInstalled.addListener(function (details) {
             break;
         case 'update':
             getStorage(function (tab_modifier) {
-                if (tab_modifier === undefined || tab_modifier.settings === undefined) {
+                if (
+                    tab_modifier === undefined ||
+                    tab_modifier.settings === undefined
+                ) {
                     return;
                 }
 
                 if (
                     tab_modifier.settings !== undefined &&
-                    tab_modifier.settings.enable_new_version_notification === true &&
-                    details.previousVersion !== chrome.runtime.getManifest().version
+                    tab_modifier.settings.enable_new_version_notification ===
+                        true &&
+                    details.previousVersion !==
+                        chrome.runtime.getManifest().version
                 ) {
-                    openOptionsPage('update/' + chrome.runtime.getManifest().version);
+                    openOptionsPage(
+                        'update/' + chrome.runtime.getManifest().version,
+                    );
                 }
             });
             break;
@@ -116,7 +131,7 @@ chrome.contextMenus.create({
 chrome.contextMenus.onClicked.addListener(function (info, tab) {
     if (info.menuItemId === 'rename-tab') {
         const title = prompt(
-            'Enter the new title, a Tab rule will be automatically created for you based on current URL'
+            'Enter the new title, a Tab rule will be automatically created for you based on current URL',
         );
 
         getStorage(function (tab_modifier) {
@@ -131,7 +146,9 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
 
             const rule = {
                 name:
-                    'Rule created from right-click (' + tab.url.replace(/(^\w+:|^)\/\//, '').substring(0, 15) + '...)',
+                    'Rule created from right-click (' +
+                    tab.url.replace(/(^\w+:|^)\/\//, '').substring(0, 15) +
+                    '...)',
                 detection: 'CONTAINS',
                 url_fragment: tab.url,
                 tab: {

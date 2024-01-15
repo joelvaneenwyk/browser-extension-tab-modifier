@@ -40,11 +40,16 @@ app.controller('SettingsController', [
 
         // Import tab rules action
         $scope.import = function (content, replace_existing_rules) {
-            replace_existing_rules = typeof replace_existing_rules !== 'undefined' ? replace_existing_rules : true;
+            replace_existing_rules =
+                typeof replace_existing_rules !== 'undefined'
+                    ? replace_existing_rules
+                    : true;
             const result = tab_modifier.checkFileBeforeImport(content);
 
             if (result === true) {
-                const inputId = replace_existing_rules ? 'importReplace' : 'importAdd';
+                const inputId = replace_existing_rules
+                    ? 'importReplace'
+                    : 'importAdd';
                 document.getElementById(inputId).value = '';
 
                 tab_modifier.import(content, replace_existing_rules).sync();
@@ -56,8 +61,10 @@ app.controller('SettingsController', [
                 $mdToast.show(
                     $mdToast
                         .simple()
-                        .textContent('Your tab rules have been successfully imported')
-                        .position('top right')
+                        .textContent(
+                            'Your tab rules have been successfully imported',
+                        )
+                        .position('top right'),
                 );
 
                 Analytics.trackEvent('tab-rules', 'import-success');
@@ -66,14 +73,19 @@ app.controller('SettingsController', [
 
                 switch (result) {
                     case 'INVALID_JSON_FORMAT':
-                        message = 'Invalid JSON file. Please check it on jsonlint.com.';
+                        message =
+                            'Invalid JSON file. Please check it on jsonlint.com.';
 
                         Analytics.trackEvent('tab-rules', 'import-error-json');
                         break;
                     case 'INVALID_SETTINGS':
-                        message = 'Invalid settings file. Is this file comes from Tab Modifier?';
+                        message =
+                            'Invalid settings file. Is this file comes from Tab Modifier?';
 
-                        Analytics.trackEvent('tab-rules', 'import-error-format');
+                        Analytics.trackEvent(
+                            'tab-rules',
+                            'import-error-format',
+                        );
                         break;
                 }
                 $mdDialog.hide();
@@ -84,7 +96,7 @@ app.controller('SettingsController', [
                         .title('Failed to import tab rules')
                         .textContent(message)
                         .ariaLabel('Failed to import tab rules')
-                        .ok('OK, sorry')
+                        .ok('OK, sorry'),
                 );
             }
         };
@@ -95,7 +107,9 @@ app.controller('SettingsController', [
                 .confirm()
                 .clickOutsideToClose(false)
                 .title('Delete all')
-                .textContent('Do you really want to delete all of your tab rules?')
+                .textContent(
+                    'Do you really want to delete all of your tab rules?',
+                )
                 .ariaLabel('Delete all')
                 .targetEvent(evt)
                 .ok('Delete all')

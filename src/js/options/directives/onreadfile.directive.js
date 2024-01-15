@@ -18,7 +18,10 @@ app.directive('onReadFile', [
                         });
                     };
 
-                    reader.readAsText((onChangeEvent.srcElement || onChangeEvent.target).files[0]);
+                    reader.readAsText(
+                        (onChangeEvent.srcElement || onChangeEvent.target)
+                            .files[0],
+                    );
                 });
             },
         };

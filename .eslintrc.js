@@ -3,13 +3,13 @@
  */
 
 /** @type {import('eslint').Linter.StringSeverity} */
-const OFF = "off";
+const OFF = 'off';
 
 /** @type {import('eslint').Linter.StringSeverity} */
-const WARN = "warn";  // eslint-disable-line no-unused-vars
+const WARN = 'warn'; // eslint-disable-line no-unused-vars
 
 /** @type {import('eslint').Linter.StringSeverity} */
-const ERROR = "error";
+const ERROR = 'error';
 
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
@@ -30,7 +30,13 @@ module.exports = {
         app: true,
     },
 
-    ignorePatterns: ['**/*.min.*', '.yarn/cache/**/*', 'dist/**/*', 'node_modules/**/*', 'coverage/**/*'],
+    ignorePatterns: [
+        '**/*.min.*',
+        '.yarn/cache/**/*',
+        'dist/**/*',
+        'node_modules/**/*',
+        'coverage/**/*',
+    ],
 
     rules: {
         'dot-notation': ERROR,
@@ -53,7 +59,7 @@ module.exports = {
         ],
         'no-with': ERROR,
         'no-multi-str': ERROR,
-        'camelcase': 'off',
+        'camelcase': OFF,
         'consistent-this': [ERROR, 'that'],
         'yoda': [ERROR, 'never'],
         'spaced-comment': OFF,

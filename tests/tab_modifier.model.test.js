@@ -15,7 +15,9 @@ describe('TabModifier model', function () {
         const tab_modifier = new TabModifier();
 
         expect(tab_modifier instanceof TabModifier).toBe(true);
-        expect(tab_modifier.settings.enable_new_version_notification).toBe(false);
+        expect(tab_modifier.settings.enable_new_version_notification).toBe(
+            false,
+        );
         expect(tab_modifier.rules).toBeEmptyArray();
     });
 
@@ -26,7 +28,9 @@ describe('TabModifier model', function () {
             settings: { enable_new_version_notification: true },
         });
 
-        expect(tab_modifier.settings.enable_new_version_notification).toBe(true);
+        expect(tab_modifier.settings.enable_new_version_notification).toBe(
+            true,
+        );
     });
 
     it('Add a rule', function () {
@@ -104,7 +108,9 @@ describe('TabModifier model', function () {
         expect(tab_modifier.rules[2].detection).toBe('CONTAINS');
         expect(tab_modifier.rules[2].url_fragment).toBe('youtube.com');
         expect(tab_modifier.rules[2].tab.title).toBe(null);
-        expect(tab_modifier.rules[2].tab.icon).toBe('https://www.google.com/favicon.ico');
+        expect(tab_modifier.rules[2].tab.icon).toBe(
+            'https://www.google.com/favicon.ico',
+        );
         expect(tab_modifier.rules[2].tab.pinned).toBe(true);
         expect(tab_modifier.rules[2].tab.protected).toBe(false);
         expect(tab_modifier.rules[2].tab.unique).toBe(false);
@@ -124,7 +130,9 @@ describe('TabModifier model', function () {
 
         expect(tab_modifier.rules[4].name).toBe('Unique GMail');
         expect(tab_modifier.rules[4].detection).toBe('STARTS');
-        expect(tab_modifier.rules[4].url_fragment).toBe('https://mail.google.com');
+        expect(tab_modifier.rules[4].url_fragment).toBe(
+            'https://mail.google.com',
+        );
         expect(tab_modifier.rules[4].tab.title).toBe(null);
         expect(tab_modifier.rules[4].tab.icon).toBe(null);
         expect(tab_modifier.rules[4].tab.pinned).toBe(false);
@@ -153,7 +161,9 @@ describe('TabModifier model', function () {
         expect(tab_modifier.rules[6].tab.protected).toBe(false);
         expect(tab_modifier.rules[6].tab.unique).toBe(false);
         expect(tab_modifier.rules[6].tab.muted).toBe(false);
-        expect(tab_modifier.rules[6].tab.url_matcher).toBe('github[.]com/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)');
+        expect(tab_modifier.rules[6].tab.url_matcher).toBe(
+            'github[.]com/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)',
+        );
     });
 
     it('Sync data', function () {
@@ -163,11 +173,19 @@ describe('TabModifier model', function () {
     it('Check file before import', function () {
         const tab_modifier = new TabModifier();
 
-        expect(tab_modifier.checkFileBeforeImport(JSON.stringify(getJSONFixture('old_settings.json')))).toBe(
-            'INVALID_SETTINGS'
+        expect(
+            tab_modifier.checkFileBeforeImport(
+                JSON.stringify(getJSONFixture('old_settings.json')),
+            ),
+        ).toBe('INVALID_SETTINGS');
+        expect(tab_modifier.checkFileBeforeImport(null)).toBe(
+            'INVALID_JSON_FORMAT',
         );
-        expect(tab_modifier.checkFileBeforeImport(null)).toBe('INVALID_JSON_FORMAT');
-        expect(tab_modifier.checkFileBeforeImport(JSON.stringify(getJSONFixture('tab_modifier.json')))).toBe(true);
+        expect(
+            tab_modifier.checkFileBeforeImport(
+                JSON.stringify(getJSONFixture('tab_modifier.json')),
+            ),
+        ).toBe(true);
         expect(tab_modifier.checkFileBeforeImport()).toBe(false);
     });
 

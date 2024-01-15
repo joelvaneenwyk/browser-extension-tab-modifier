@@ -1,4 +1,12 @@
+#
+# Prettier ignore file for web extensions.
+#
+
+node_modules/
+.yarn/cache/
+.yarn/unplugged/
 **/*.min.*
 **/*.svg
-*.lock
-*-lock.json
+yarn.lock
+package-lock.json
+test-output.xml

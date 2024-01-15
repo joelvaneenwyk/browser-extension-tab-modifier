@@ -13,10 +13,20 @@ app.config([
     '$mdIconProvider',
     '$mdThemingProvider',
     'AnalyticsProvider',
-    function ($routeProvider, $compileProvider, $mdIconProvider, $mdThemingProvider, AnalyticsProvider) {
+    function (
+        $routeProvider,
+        $compileProvider,
+        $mdIconProvider,
+        $mdThemingProvider,
+        AnalyticsProvider,
+    ) {
         // Allow "chrome-extension" protocol
-        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|chrome-extension|file|blob):/);
-        $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|chrome-extension|file|blob):|data:image\//);
+        $compileProvider.aHrefSanitizationWhitelist(
+            /^\s*(https?|chrome-extension|file|blob):/,
+        );
+        $compileProvider.imgSrcSanitizationWhitelist(
+            /^\s*(https?|chrome-extension|file|blob):|data:image\//,
+        );
 
         // Load icons list by name
         $mdIconProvider

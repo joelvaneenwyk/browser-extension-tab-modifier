@@ -56,7 +56,10 @@
   "karmaTestExplorer.logLevel": "debug",
   "karmaTestExplorer.nonHeadlessModeEnabled": true,
   "karmaTestExplorer.projectType": "karma",
-  "karmaTestExplorer.testFiles": ["src/**/*{.,-,_}{test,spec}.{ts,js}", "src/**/{test,spec}{.,-,_}*.{ts,js}"],
+  "karmaTestExplorer.testFiles": [
+    "src/**/*{.,-,_}{test,spec}.{ts,js}",
+    "src/**/{test,spec}{.,-,_}*.{ts,js}"
+  ],
   "karmaTestExplorer.testFramework": "jasmine",
   "prettier.enable": true,
   "search.exclude": {

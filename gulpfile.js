@@ -103,7 +103,7 @@ gulp.task('tests', function (done) {
         }
     }
 
-    const configFile = __dirname + '/karma.conf.js';
+    const configFile = path.join(__dirname, 'karma.conf.js');
     const config = parseConfig(
         configFile,
         {},

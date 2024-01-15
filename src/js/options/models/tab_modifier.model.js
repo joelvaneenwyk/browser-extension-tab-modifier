@@ -31,7 +31,10 @@ app.factory('TabModifier', [
         };
 
         TabModifier.prototype.build = function (data, replace_existing_rules) {
-            replace_existing_rules = typeof replace_existing_rules !== 'undefined' ? replace_existing_rules : true;
+            replace_existing_rules =
+                typeof replace_existing_rules !== 'undefined'
+                    ? replace_existing_rules
+                    : true;
             const self = this;
 
             if (data.settings !== undefined) {
@@ -70,7 +73,10 @@ app.factory('TabModifier', [
         };
 
         TabModifier.prototype.import = function (json, replace_existing_rules) {
-            replace_existing_rules = typeof replace_existing_rules !== 'undefined' ? replace_existing_rules : true;
+            replace_existing_rules =
+                typeof replace_existing_rules !== 'undefined'
+                    ? replace_existing_rules
+                    : true;
 
             this.build(JSON.parse(json), replace_existing_rules);
 
