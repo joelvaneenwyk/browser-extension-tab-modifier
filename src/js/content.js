@@ -5,32 +5,51 @@ chrome.storage.local.get('tab_modifier', function (items) {
         return;
     }
 
-    var tab_modifier = items.tab_modifier, rule = null, processPage;
+    var tab_modifier = items.tab_modifier,
+        rule = null,
+        processPage;
 
     processPage = function () {
         // Check if a rule is available
         for (var i = 0; i < tab_modifier.rules.length; i++) {
-            if (tab_modifier.rules[i].detection === undefined || tab_modifier.rules[i].detection === 'CONTAINS') {
-                if (location.href.indexOf(tab_modifier.rules[i].url_fragment) !== -1) {
+            if (
+                tab_modifier.rules[i].detection === undefined ||
+                tab_modifier.rules[i].detection === 'CONTAINS'
+            ) {
+                if (
+                    location.href.indexOf(
+                        tab_modifier.rules[i].url_fragment,
+                    ) !== -1
+                ) {
                     rule = tab_modifier.rules[i];
                     break;
                 }
             } else {
                 switch (tab_modifier.rules[i].detection) {
                     case 'STARTS':
-                        if (location.href.startsWith(tab_modifier.rules[i].url_fragment) === true) {
+                        if (
+                            location.href.startsWith(
+                                tab_modifier.rules[i].url_fragment,
+                            ) === true
+                        ) {
                             rule = tab_modifier.rules[i];
                             break;
                         }
                         break;
                     case 'ENDS':
-                        if (location.href.endsWith(tab_modifier.rules[i].url_fragment) === true) {
+                        if (
+                            location.href.endsWith(
+                                tab_modifier.rules[i].url_fragment,
+                            ) === true
+                        ) {
                             rule = tab_modifier.rules[i];
                             break;
                         }
                         break;
                     case 'REGEXP':
-                        var regexp = new RegExp(tab_modifier.rules[i].url_fragment);
+                        var regexp = new RegExp(
+                            tab_modifier.rules[i].url_fragment,
+                        );
 
                         if (regexp.test(location.href) === true) {
                             rule = tab_modifier.rules[i];
@@ -38,7 +57,9 @@ chrome.storage.local.get('tab_modifier', function (items) {
                         }
                         break;
                     case 'EXACT':
-                        if (location.href === tab_modifier.rules[i].url_fragment) {
+                        if (
+                            location.href === tab_modifier.rules[i].url_fragment
+                        ) {
                             rule = tab_modifier.rules[i];
                             break;
                         }
@@ -60,7 +81,8 @@ chrome.storage.local.get('tab_modifier', function (items) {
          * @returns {string}
          */
         getTextBySelector = function (selector) {
-            var el = document.querySelector(selector), value = '';
+            var el = document.querySelector(selector),
+                value = '';
 
             if (el !== null) {
                 el = el.childNodes[0];
@@ -99,7 +121,9 @@ chrome.storage.local.get('tab_modifier', function (items) {
          * @returns {*}
          */
         processTitle = function (current_url, current_title) {
-            var title = rule.tab.title, matches = title.match(/\{([^}]+)}/g), i;
+            var title = rule.tab.title,
+                matches = title.match(/\{([^}]+)}/g),
+                i;
 
             // Handle curly braces tags inside title
             if (matches !== null) {
@@ -115,7 +139,10 @@ chrome.storage.local.get('tab_modifier', function (items) {
             // Handle title_matcher
             if (rule.tab.title_matcher !== null) {
                 try {
-                    matches = current_title.match(new RegExp(rule.tab.title_matcher), 'g');
+                    matches = current_title.match(
+                        new RegExp(rule.tab.title_matcher),
+                        'g',
+                    );
 
                     if (matches !== null) {
                         for (i = 0; i < matches.length; i++) {
@@ -130,7 +157,10 @@ chrome.storage.local.get('tab_modifier', function (items) {
             // Handle url_matcher
             if (rule.tab.url_matcher !== null) {
                 try {
-                    matches = current_url.match(new RegExp(rule.tab.url_matcher), 'g');
+                    matches = current_url.match(
+                        new RegExp(rule.tab.url_matcher),
+                        'g',
+                    );
 
                     if (matches !== null) {
                         for (i = 0; i < matches.length; i++) {
@@ -161,7 +191,10 @@ chrome.storage.local.get('tab_modifier', function (items) {
             });
 
             // Set preconfigured or custom (http|https|data) icon
-            icon = (/^(https?|data):/.test(new_icon) === true) ? new_icon : chrome.extension.getURL('/img/' + new_icon);
+            icon =
+                /^(https?|data):/.test(new_icon) === true
+                    ? new_icon
+                    : chrome.extension.getURL('/img/' + new_icon);
 
             // Create new favicon
             link = document.createElement('link');
@@ -181,16 +214,22 @@ chrome.storage.local.get('tab_modifier', function (items) {
             }
         }
 
-        var title_changed_by_me = false, observer_title;
+        var title_changed_by_me = false,
+            observer_title;
 
         // Set up a new observer
-        observer_title = new window.WebKitMutationObserver(function (mutations) {
+        observer_title = new window.WebKitMutationObserver(function (
+            mutations,
+        ) {
             if (title_changed_by_me === true) {
                 title_changed_by_me = false;
             } else {
                 mutations.forEach(function () {
                     if (rule.tab.title !== null) {
-                        document.title = processTitle(location.href, document.title);
+                        document.title = processTitle(
+                            location.href,
+                            document.title,
+                        );
                     }
 
                     title_changed_by_me = true;
@@ -203,7 +242,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
             observer_title.observe(document.querySelector('head > title'), {
                 subtree: true,
                 characterresponse: true,
-                childList: true
+                childList: true,
             });
         }
 
@@ -216,10 +255,13 @@ chrome.storage.local.get('tab_modifier', function (items) {
         if (rule.tab.icon !== null) {
             processIcon(rule.tab.icon);
 
-            var icon_changed_by_me = false, observer_icon;
+            var icon_changed_by_me = false,
+                observer_icon;
 
             // Set up a new observer
-            observer_icon = new window.WebKitMutationObserver(function (mutations) {
+            observer_icon = new window.WebKitMutationObserver(function (
+                mutations,
+            ) {
                 if (icon_changed_by_me === true) {
                     icon_changed_by_me = false;
                 } else {
@@ -261,7 +303,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
                     characterData: true,
                     subtree: true,
                     attributeOldValue: true,
-                    characterDataOldValue: true
+                    characterDataOldValue: true,
                 });
             }
         }
@@ -277,7 +319,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
         if (rule.tab.unique === true) {
             chrome.runtime.sendMessage({
                 action: 'setUnique',
-                url_fragment: rule.url_fragment
+                url_fragment: rule.url_fragment,
             });
         }
 
@@ -291,5 +333,4 @@ chrome.storage.local.get('tab_modifier', function (items) {
 
     // Reverted #39
     // w.onhashchange = processPage;
-
 });

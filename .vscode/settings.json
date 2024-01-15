@@ -1,52 +1,52 @@
 {
-    "[javascript]": {
-        "editor.maxTokenizationLineLength": 2500,
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "editor.codeActionsOnSave": {
-            "source.fixAll.eslint": true
-        }
-    },
-    "search.exclude": {
-        "**/.yarn": true,
-        "**/.pnp.*": true
-    },
-    "cSpell.words": [
-        "hcbgadmbdkiilgpifjgcakjehmafcjai",
-        "iife",
-        "jsonminify",
-        "linebreak",
-        "nonwords",
-        "semistandard"
-    ],
-    "jest.autoRun": "off",
-    "jest.testExplorer": {
-        "enable": false
-    },
-    "jestrunner.codeLensSelector": "",
-    "jestrunner.codeLens": [],
-    "karmaTestExplorer.autoWatchEnabled": true,
-    "karmaTestExplorer.logLevel": "debug",
-    "karmaTestExplorer.testFiles": [
-        "src/**/*{.,-,_}{test,spec}.{ts,js}",
-        "src/**/{test,spec}{.,-,_}*.{ts,js}"
-    ],
-    "prettier.enable": true,
-    "java.autobuild.enabled": false,
-    "jasmineExplorer.logpanel": true,
-    "jasmineExplorer.config": "tests/jasmine.json",
-    "testExplorer.addToEditorContextMenu": false,
-    "testExplorer.useNativeTesting": false,
-    "testExplorer.onStart": null,
-    "testExplorer.onReload": null,
-    "angular.trace.server": "messages",
-    "karmaTestExplorer.browser": "Edge",
-    "karmaTestExplorer.autoWatchBatchDelay": 800,
-    "karmaTestExplorer.containerMode": "enabled",
-    "karmaTestExplorer.enableExtension": true,
-    "karmaTestExplorer.excludeDisabledTests": true,
-    "karmaTestExplorer.karmaConfFilePath": "karma.conf.js",
-    "karmaTestExplorer.karmaReporterLogLevel": "warn",
-    "karmaTestExplorer.nonHeadlessModeEnabled": true,
-    "karmaTestExplorer.projectType": "karma",
-    "karmaTestExplorer.testFramework": "jasmine"
+  "[javascript]": {
+    "editor.maxTokenizationLineLength": 2500,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    }
+  },
+  "search.exclude": {
+    "**/.yarn": true,
+    "**/.pnp.*": true
+  },
+  "cSpell.words": [
+    "hcbgadmbdkiilgpifjgcakjehmafcjai",
+    "iife",
+    "jsonminify",
+    "linebreak",
+    "nonwords",
+    "semistandard"
+  ],
+  "jest.autoRun": "off",
+  "jest.testExplorer": {
+    "enable": false
+  },
+  "jestrunner.codeLensSelector": "",
+  "jestrunner.codeLens": [],
+  "karmaTestExplorer.autoWatchEnabled": true,
+  "karmaTestExplorer.logLevel": "debug",
+  "karmaTestExplorer.testFiles": [
+    "src/**/*{.,-,_}{test,spec}.{ts,js}",
+    "src/**/{test,spec}{.,-,_}*.{ts,js}"
+  ],
+  "prettier.enable": true,
+  "java.autobuild.enabled": false,
+  "jasmineExplorer.logpanel": true,
+  "jasmineExplorer.config": "tests/jasmine.json",
+  "testExplorer.addToEditorContextMenu": false,
+  "testExplorer.useNativeTesting": false,
+  "testExplorer.onStart": null,
+  "testExplorer.onReload": null,
+  "angular.trace.server": "messages",
+  "karmaTestExplorer.browser": "Edge",
+  "karmaTestExplorer.autoWatchBatchDelay": 800,
+  "karmaTestExplorer.containerMode": "enabled",
+  "karmaTestExplorer.enableExtension": true,
+  "karmaTestExplorer.excludeDisabledTests": true,
+  "karmaTestExplorer.karmaConfFilePath": "karma.conf.js",
+  "karmaTestExplorer.karmaReporterLogLevel": "warn",
+  "karmaTestExplorer.nonHeadlessModeEnabled": true,
+  "karmaTestExplorer.projectType": "karma",
+  "karmaTestExplorer.testFramework": "jasmine"
 }

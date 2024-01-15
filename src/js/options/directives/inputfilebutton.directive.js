@@ -3,13 +3,13 @@ app.directive('inputFileButton', function () {
         restrict: 'E',
         link: function (scope, elem) {
             var button = elem.find('button'),
-                input  = elem.find('input');
-            
+                input = elem.find('input');
+
             input.css({ display: 'none' });
-            
+
             button.bind('click', function () {
                 input[0].click();
             });
-        }
+        },
     };
 });

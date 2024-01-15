@@ -1,4 +1,3 @@
-
 'use strict';
 
 // Gulp dependencies
@@ -47,9 +46,11 @@ gulp.task('build_options_libs', function () {
     return gulp
         .src(['src/js/libs/**/*.js'])
         .pipe(concat('libs.js'))
-        .pipe(rename({
-            suffix: '.min'
-        }))
+        .pipe(
+            rename({
+                suffix: '.min',
+            }),
+        )
         .pipe(gulp.dest('dist/js/libs'));
 });
 
@@ -64,22 +65,28 @@ gulp.task('build_options_icons', function () {
     return gulp
         .src(['src/js/options/icons.json'])
         .pipe(jsonminify())
-        .pipe(rename({
-            suffix: '.min'
-        }))
+        .pipe(
+            rename({
+                suffix: '.min',
+            }),
+        )
         .pipe(gulp.dest('dist/js'));
 });
 
 gulp.task('build_options_html', function () {
-    return gulp
-        .src(['src/html/**/*.html'])
-        .pipe(gulp.dest('dist/html'));
+    return gulp.src(['src/html/**/*.html']).pipe(gulp.dest('dist/html'));
 });
 
 gulp.task(
     'build_options',
     gulp.series(
-        'build_options_styles', 'build_options_libs', 'build_options_script', 'build_options_html', 'build_options_icons'));
+        'build_options_styles',
+        'build_options_libs',
+        'build_options_script',
+        'build_options_html',
+        'build_options_icons',
+    ),
+);
 
 // ------------------------------------------------------------------------------------------------------
 
@@ -98,29 +105,22 @@ gulp.task('tests', function (done) {
 
     const configFile = __dirname + '/karma.conf.js';
     const config = parseConfig(
-        configFile, {}, {
-        coverageReporter: coverage_reporter,
-        promiseConfig: true,
-        throwErrors: true
-    });
+        configFile,
+        {},
+        {
+            coverageReporter: coverage_reporter,
+            promiseConfig: true,
+            throwErrors: true,
+        },
+    );
     new Server(config, done).start();
 });
 
-gulp.task(
-    'build',
-    gulp.series(
-        'build_core',
-        'build_options',
-        'lint'
-    ));
+gulp.task('build', gulp.series('build_core', 'build_options', 'lint'));
 
 gulp.task('watch', function () {
     gulp.watch('src/**/*', gulp.series('build_core', 'build_options'));
 });
 
 // Default tasks (called when running `gulp` from cli)
-gulp.task('default', gulp.series(
-    'build_core',
-    'build_options',
-    'watch'
-));
+gulp.task('default', gulp.series('build_core', 'build_options', 'watch'));

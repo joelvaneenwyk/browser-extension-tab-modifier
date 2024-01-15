@@ -1,5 +1,4 @@
 describe('Rule model', function () {
-
     beforeEach(module('TabModifier'));
 
     var Rule;
@@ -21,5 +20,4 @@ describe('Rule model', function () {
 
         expect(rule.name).toBe('Hello');
     });
-
 });
