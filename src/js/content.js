@@ -1,55 +1,37 @@
-var w = window;
+const w = window;
 
 chrome.storage.local.get('tab_modifier', function (items) {
     if (items.tab_modifier === undefined) {
         return;
     }
 
-    var tab_modifier = items.tab_modifier,
-        rule = null,
-        processPage;
+    const tab_modifier = items.tab_modifier;
+    let rule = null;
 
-    processPage = function () {
+    const processPage = function () {
         // Check if a rule is available
-        for (var i = 0; i < tab_modifier.rules.length; i++) {
-            if (
-                tab_modifier.rules[i].detection === undefined ||
-                tab_modifier.rules[i].detection === 'CONTAINS'
-            ) {
-                if (
-                    location.href.indexOf(
-                        tab_modifier.rules[i].url_fragment,
-                    ) !== -1
-                ) {
+        for (let i = 0; i < tab_modifier.rules.length; i++) {
+            if (tab_modifier.rules[i].detection === undefined || tab_modifier.rules[i].detection === 'CONTAINS') {
+                if (location.href.indexOf(tab_modifier.rules[i].url_fragment) !== -1) {
                     rule = tab_modifier.rules[i];
                     break;
                 }
             } else {
                 switch (tab_modifier.rules[i].detection) {
                     case 'STARTS':
-                        if (
-                            location.href.startsWith(
-                                tab_modifier.rules[i].url_fragment,
-                            ) === true
-                        ) {
+                        if (location.href.startsWith(tab_modifier.rules[i].url_fragment) === true) {
                             rule = tab_modifier.rules[i];
                             break;
                         }
                         break;
                     case 'ENDS':
-                        if (
-                            location.href.endsWith(
-                                tab_modifier.rules[i].url_fragment,
-                            ) === true
-                        ) {
+                        if (location.href.endsWith(tab_modifier.rules[i].url_fragment) === true) {
                             rule = tab_modifier.rules[i];
                             break;
                         }
                         break;
                     case 'REGEXP':
-                        var regexp = new RegExp(
-                            tab_modifier.rules[i].url_fragment,
-                        );
+                        var regexp = new RegExp(tab_modifier.rules[i].url_fragment);
 
                         if (regexp.test(location.href) === true) {
                             rule = tab_modifier.rules[i];
@@ -57,9 +39,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
                         }
                         break;
                     case 'EXACT':
-                        if (
-                            location.href === tab_modifier.rules[i].url_fragment
-                        ) {
+                        if (location.href === tab_modifier.rules[i].url_fragment) {
                             rule = tab_modifier.rules[i];
                             break;
                         }
@@ -73,7 +53,10 @@ chrome.storage.local.get('tab_modifier', function (items) {
             return;
         }
 
-        var getTextBySelector, updateTitle, processTitle, processIcon;
+        let getTextBySelector;
+        let updateTitle;
+        let processTitle;
+        let processIcon;
 
         /**
          * Returns the text related to the given CSS selector
@@ -81,8 +64,8 @@ chrome.storage.local.get('tab_modifier', function (items) {
          * @returns {string}
          */
         getTextBySelector = function (selector) {
-            var el = document.querySelector(selector),
-                value = '';
+            let el = document.querySelector(selector);
+            let value = '';
 
             if (el !== null) {
                 el = el.childNodes[0];
@@ -121,13 +104,14 @@ chrome.storage.local.get('tab_modifier', function (items) {
          * @returns {*}
          */
         processTitle = function (current_url, current_title) {
-            var title = rule.tab.title,
-                matches = title.match(/\{([^}]+)}/g),
-                i;
+            let title = rule.tab.title;
+            let matches = title.match(/\{([^}]+)}/g);
+            let i;
 
             // Handle curly braces tags inside title
             if (matches !== null) {
-                var selector, text;
+                let selector;
+                let text;
 
                 for (i = 0; i < matches.length; i++) {
                     selector = matches[i].substring(1, matches[i].length - 1);
@@ -139,10 +123,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
             // Handle title_matcher
             if (rule.tab.title_matcher !== null) {
                 try {
-                    matches = current_title.match(
-                        new RegExp(rule.tab.title_matcher),
-                        'g',
-                    );
+                    matches = current_title.match(new RegExp(rule.tab.title_matcher), 'g');
 
                     if (matches !== null) {
                         for (i = 0; i < matches.length; i++) {
@@ -157,10 +138,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
             // Handle url_matcher
             if (rule.tab.url_matcher !== null) {
                 try {
-                    matches = current_url.match(
-                        new RegExp(rule.tab.url_matcher),
-                        'g',
-                    );
+                    matches = current_url.match(new RegExp(rule.tab.url_matcher), 'g');
 
                     if (matches !== null) {
                         for (i = 0; i < matches.length; i++) {
@@ -181,7 +159,9 @@ chrome.storage.local.get('tab_modifier', function (items) {
          * @returns {boolean}
          */
         processIcon = function (new_icon) {
-            var el, icon, link;
+            let el;
+            let icon;
+            let link;
 
             el = document.querySelectorAll('head link[rel*="icon"]');
 
@@ -191,10 +171,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
             });
 
             // Set preconfigured or custom (http|https|data) icon
-            icon =
-                /^(https?|data):/.test(new_icon) === true
-                    ? new_icon
-                    : chrome.extension.getURL('/img/' + new_icon);
+            icon = /^(https?|data):/.test(new_icon) === true ? new_icon : chrome.extension.getURL('/img/' + new_icon);
 
             // Create new favicon
             link = document.createElement('link');
@@ -214,22 +191,17 @@ chrome.storage.local.get('tab_modifier', function (items) {
             }
         }
 
-        var title_changed_by_me = false,
-            observer_title;
+        let title_changed_by_me = false;
+        let observer_title;
 
         // Set up a new observer
-        observer_title = new window.WebKitMutationObserver(function (
-            mutations,
-        ) {
+        observer_title = new window.WebKitMutationObserver(function (mutations) {
             if (title_changed_by_me === true) {
                 title_changed_by_me = false;
             } else {
                 mutations.forEach(function () {
                     if (rule.tab.title !== null) {
-                        document.title = processTitle(
-                            location.href,
-                            document.title,
-                        );
+                        document.title = processTitle(location.href, document.title);
                     }
 
                     title_changed_by_me = true;
@@ -255,13 +227,11 @@ chrome.storage.local.get('tab_modifier', function (items) {
         if (rule.tab.icon !== null) {
             processIcon(rule.tab.icon);
 
-            var icon_changed_by_me = false,
-                observer_icon;
+            let icon_changed_by_me = false;
+            let observer_icon;
 
             // Set up a new observer
-            observer_icon = new window.WebKitMutationObserver(function (
-                mutations,
-            ) {
+            observer_icon = new window.WebKitMutationObserver(function (mutations) {
                 if (icon_changed_by_me === true) {
                     icon_changed_by_me = false;
                 } else {

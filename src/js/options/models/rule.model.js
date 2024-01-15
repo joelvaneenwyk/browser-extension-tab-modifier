@@ -1,5 +1,5 @@
 app.factory('Rule', function () {
-    var Rule = function (properties) {
+    const Rule = function (properties) {
         this.name = null;
         this.detection = 'CONTAINS';
         this.url_fragment = null;

@@ -19,8 +19,8 @@ app.controller('TabRulesController', [
         TabModifier,
         Analytics,
     ) {
-        var tab_modifier = new TabModifier(),
-            icon_list = [];
+        const tab_modifier = new TabModifier();
+        let icon_list = [];
 
         // Load icon list
         $http.get('/js/icons.min.json').then(function (request) {
@@ -29,10 +29,7 @@ app.controller('TabRulesController', [
 
         // Avoid BC break
         chrome.storage.sync.get('tab_modifier', function (items) {
-            if (
-                items.tab_modifier !== undefined &&
-                items.tab_modifier !== null
-            ) {
+            if (items.tab_modifier !== undefined && items.tab_modifier !== null) {
                 tab_modifier.build(items.tab_modifier);
                 tab_modifier.sync();
             }
@@ -59,8 +56,7 @@ app.controller('TabRulesController', [
 
         // Show modal form
         $scope.showForm = function (evt, rule) {
-            var index =
-                rule === undefined ? null : tab_modifier.rules.indexOf(rule);
+            const index = rule === undefined ? null : tab_modifier.rules.indexOf(rule);
 
             $mdDialog
                 .show({
@@ -86,17 +82,12 @@ app.controller('TabRulesController', [
                         tab_modifier.sync();
 
                         $mdToast.show(
-                            $mdToast
-                                .simple()
-                                .textContent(
-                                    'Your rule has been successfully saved',
-                                )
-                                .position('top right'),
+                            $mdToast.simple().textContent('Your rule has been successfully saved').position('top right')
                         );
                     },
                     function () {
                         Analytics.trackEvent('tab-rules', 'close-form');
-                    },
+                    }
                 );
         };
 
@@ -116,7 +107,7 @@ app.controller('TabRulesController', [
 
         // Delete a rule
         $scope.delete = function (evt, rule) {
-            var confirm = $mdDialog
+            const confirm = $mdDialog
                 .confirm()
                 .clickOutsideToClose(false)
                 .title('Delete rule')
@@ -132,10 +123,7 @@ app.controller('TabRulesController', [
                 tab_modifier.sync();
 
                 $mdToast.show(
-                    $mdToast
-                        .simple()
-                        .textContent('Your rule has been successfully deleted')
-                        .position('top right'),
+                    $mdToast.simple().textContent('Your rule has been successfully deleted').position('top right')
                 );
             });
         };
@@ -146,9 +134,7 @@ app.controller('TabRulesController', [
                 return null;
             }
 
-            return /^(https?|data):/.test(icon) === true
-                ? icon
-                : chrome.extension.getURL('/img/' + icon);
+            return /^(https?|data):/.test(icon) === true ? icon : chrome.extension.getURL('/img/' + icon);
         };
 
         // --------------------------------------------------------------------------------------------------------
@@ -156,13 +142,11 @@ app.controller('TabRulesController', [
 
         // New install
         if ($routeParams.event === 'install') {
-            var confirm = $mdDialog
+            const confirm = $mdDialog
                 .confirm()
                 .clickOutsideToClose(true)
                 .title('Greetings')
-                .textContent(
-                    'Hello, thank you for installing Tab Modifier, start by creating your first rule!',
-                )
+                .textContent('Hello, thank you for installing Tab Modifier, start by creating your first rule!')
                 .ariaLabel('Greetings')
                 .targetEvent()
                 .ok('Create my first rule')
@@ -176,7 +160,7 @@ app.controller('TabRulesController', [
                 },
                 function () {
                     Analytics.trackEvent('greetings-dialog', 'show-form');
-                },
+                }
             );
         }
 

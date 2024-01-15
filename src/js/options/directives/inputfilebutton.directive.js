@@ -2,8 +2,8 @@ app.directive('inputFileButton', function () {
     return {
         restrict: 'E',
         link: function (scope, elem) {
-            var button = elem.find('button'),
-                input = elem.find('input');
+            const button = elem.find('button');
+            const input = elem.find('input');
 
             input.css({ display: 'none' });
 

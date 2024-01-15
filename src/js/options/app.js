@@ -1,4 +1,4 @@
-var app = angular.module('TabModifier', [
+const app = angular.module('TabModifier', [
     'ngRoute',
     'ngAnimate',
     'ngAria',
@@ -13,20 +13,10 @@ app.config([
     '$mdIconProvider',
     '$mdThemingProvider',
     'AnalyticsProvider',
-    function (
-        $routeProvider,
-        $compileProvider,
-        $mdIconProvider,
-        $mdThemingProvider,
-        AnalyticsProvider,
-    ) {
+    function ($routeProvider, $compileProvider, $mdIconProvider, $mdThemingProvider, AnalyticsProvider) {
         // Allow "chrome-extension" protocol
-        $compileProvider.aHrefSanitizationWhitelist(
-            /^\s*(https?|chrome-extension|file|blob):/,
-        );
-        $compileProvider.imgSrcSanitizationWhitelist(
-            /^\s*(https?|chrome-extension|file|blob):|data:image\//,
-        );
+        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|chrome-extension|file|blob):/);
+        $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|chrome-extension|file|blob):|data:image\//);
 
         // Load icons list by name
         $mdIconProvider
@@ -77,7 +67,7 @@ app.config([
         AnalyticsProvider.setHybridMobileSupport(true);
         AnalyticsProvider.setDomainName('none');
 
-        var routes = {
+        const routes = {
             '/settings': {
                 templateUrl: '/html/settings.html',
                 controller: 'SettingsController',
@@ -92,7 +82,7 @@ app.config([
             },
         };
 
-        for (var path in routes) {
+        for (const path in routes) {
             if (routes.hasOwnProperty(path)) {
                 $routeProvider.when(path, routes[path]);
             }

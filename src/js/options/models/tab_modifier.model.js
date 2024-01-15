@@ -1,7 +1,7 @@
 app.factory('TabModifier', [
     'Rule',
     function (Rule) {
-        var TabModifier = function (properties) {
+        const TabModifier = function (properties) {
             this.settings = {
                 enable_new_version_notification: false,
             };
@@ -31,11 +31,8 @@ app.factory('TabModifier', [
         };
 
         TabModifier.prototype.build = function (data, replace_existing_rules) {
-            replace_existing_rules =
-                typeof replace_existing_rules !== 'undefined'
-                    ? replace_existing_rules
-                    : true;
-            var self = this;
+            replace_existing_rules = typeof replace_existing_rules !== 'undefined' ? replace_existing_rules : true;
+            const self = this;
 
             if (data.settings !== undefined) {
                 this.settings = data.settings;
@@ -57,7 +54,7 @@ app.factory('TabModifier', [
         TabModifier.prototype.checkFileBeforeImport = function (json) {
             if (json !== undefined) {
                 try {
-                    var settings = JSON.parse(json);
+                    const settings = JSON.parse(json);
 
                     if ('rules' in settings === false) {
                         return 'INVALID_SETTINGS';
@@ -73,10 +70,7 @@ app.factory('TabModifier', [
         };
 
         TabModifier.prototype.import = function (json, replace_existing_rules) {
-            replace_existing_rules =
-                typeof replace_existing_rules !== 'undefined'
-                    ? replace_existing_rules
-                    : true;
+            replace_existing_rules = typeof replace_existing_rules !== 'undefined' ? replace_existing_rules : true;
 
             this.build(JSON.parse(json), replace_existing_rules);
 
@@ -84,7 +78,7 @@ app.factory('TabModifier', [
         };
 
         TabModifier.prototype.export = function () {
-            var blob = new Blob([JSON.stringify(this, null, 4)], {
+            const blob = new Blob([JSON.stringify(this, null, 4)], {
                 type: 'text/plain',
             });
 

@@ -1,34 +1,27 @@
 /*jshint esversion: 6, loopfunc: true */
 
-let options_url = chrome.extension.getURL('html/options.html'),
-    openOptionsPage,
-    getStorage;
+const options_url = chrome.extension.getURL('html/options.html');
 
 // --------------------------------------------------------------------------------------------------------
 // Functions
 
-openOptionsPage = function (hash) {
+const openOptionsPage = function (hash) {
     chrome.tabs.query({ url: options_url }, function (tabs) {
         if (tabs.length > 0) {
-            chrome.tabs.update(
-                tabs[0].id,
-                { active: true, highlighted: true },
-                function (current_tab) {
-                    chrome.windows.update(current_tab.windowId, {
-                        focused: true,
-                    });
-                },
-            );
+            chrome.tabs.update(tabs[0].id, { active: true, highlighted: true }, function (current_tab) {
+                chrome.windows.update(current_tab.windowId, {
+                    focused: true,
+                });
+            });
         } else {
             chrome.tabs.create({
-                url:
-                    hash !== undefined ? options_url + '#' + hash : options_url,
+                url: hash !== undefined ? options_url + '#' + hash : options_url,
             });
         }
     });
 };
 
-getStorage = function (callback) {
+const getStorage = function (callback) {
     chrome.storage.local.get('tab_modifier', function (items) {
         callback(items.tab_modifier);
     });
@@ -45,16 +38,14 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
                     return;
                 }
 
-                let tab, tab_id;
+                let tab;
+                let tab_id;
 
                 chrome.tabs.query({}, function (tabs) {
                     for (let i = 0; i < tabs.length; i++) {
                         tab = tabs[i];
 
-                        if (
-                            tab.url.indexOf(message.url_fragment) !== -1 &&
-                            tab.id !== current_tab.id
-                        ) {
+                        if (tab.url.indexOf(message.url_fragment) !== -1 && tab.id !== current_tab.id) {
                             tab_id = tab.id;
 
                             chrome.tabs.executeScript(
@@ -69,7 +60,7 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
                                         url: current_tab.url,
                                         highlighted: true,
                                     });
-                                },
+                                }
                             );
                         }
                     }
@@ -100,23 +91,16 @@ chrome.runtime.onInstalled.addListener(function (details) {
             break;
         case 'update':
             getStorage(function (tab_modifier) {
-                if (
-                    tab_modifier === undefined ||
-                    tab_modifier.settings === undefined
-                ) {
+                if (tab_modifier === undefined || tab_modifier.settings === undefined) {
                     return;
                 }
 
                 if (
                     tab_modifier.settings !== undefined &&
-                    tab_modifier.settings.enable_new_version_notification ===
-                        true &&
-                    details.previousVersion !==
-                        chrome.runtime.getManifest().version
+                    tab_modifier.settings.enable_new_version_notification === true &&
+                    details.previousVersion !== chrome.runtime.getManifest().version
                 ) {
-                    openOptionsPage(
-                        'update/' + chrome.runtime.getManifest().version,
-                    );
+                    openOptionsPage('update/' + chrome.runtime.getManifest().version);
                 }
             });
             break;
@@ -131,8 +115,8 @@ chrome.contextMenus.create({
 
 chrome.contextMenus.onClicked.addListener(function (info, tab) {
     if (info.menuItemId === 'rename-tab') {
-        let title = prompt(
-            'Enter the new title, a Tab rule will be automatically created for you based on current URL',
+        const title = prompt(
+            'Enter the new title, a Tab rule will be automatically created for you based on current URL'
         );
 
         getStorage(function (tab_modifier) {
@@ -145,15 +129,13 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
                 };
             }
 
-            let rule = {
+            const rule = {
                 name:
-                    'Rule created from right-click (' +
-                    tab.url.replace(/(^\w+:|^)\/\//, '').substring(0, 15) +
-                    '...)',
+                    'Rule created from right-click (' + tab.url.replace(/(^\w+:|^)\/\//, '').substring(0, 15) + '...)',
                 detection: 'CONTAINS',
                 url_fragment: tab.url,
                 tab: {
-                    title: title,
+                    title,
                     icon: null,
                     pinned: false,
                     protected: false,
@@ -166,7 +148,7 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
 
             tab_modifier.rules.push(rule);
 
-            chrome.storage.local.set({ tab_modifier: tab_modifier });
+            chrome.storage.local.set({ tab_modifier });
 
             chrome.tabs.reload(tab.id);
         });

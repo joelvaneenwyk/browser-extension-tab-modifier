@@ -5,10 +5,10 @@ app.directive('onReadFile', [
             restrict: 'A',
             scope: false,
             link: function (scope, element, attrs) {
-                var fn = $parse(attrs.onReadFile);
+                const fn = $parse(attrs.onReadFile);
 
                 element.on('change', function (onChangeEvent) {
-                    var reader = new FileReader();
+                    const reader = new FileReader();
 
                     reader.onload = function (onLoadEvent) {
                         scope.$apply(function () {
@@ -18,10 +18,7 @@ app.directive('onReadFile', [
                         });
                     };
 
-                    reader.readAsText(
-                        (onChangeEvent.srcElement || onChangeEvent.target)
-                            .files[0],
-                    );
+                    reader.readAsText((onChangeEvent.srcElement || onChangeEvent.target).files[0]);
                 });
             },
         };
