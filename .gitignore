@@ -1,11 +1,14 @@
+#
+# Ignore file for web extensions
+#
+
 node_modules/
 
 coverage/
 
-.yarn/cache/
-.yarn/unplugged/
-.yarn/install-state.gz
 .pnp.cjs
 .pnp.loader.mjs
 
 test-output.xml
+
+.pytest_cache/

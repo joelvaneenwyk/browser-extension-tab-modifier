@@ -12,15 +12,11 @@
     "url": "https://github.com/joelvaneenwyk/browser-extension-tab-modifier/issues"
   },
   "scripts": {
-    "build": "yarn ts-node build.ts"
+    "build": "gulp build"
   },
-  "packageManager": "yarn@3.6.3",
   "dependencies": {
     "@types/gulp": "^4.0.17",
     "@types/node": "^20.11.0",
-    "@typescript-eslint/eslint-plugin": "^6.18.1",
-    "@typescript-eslint/parser": "^6.18.1",
-    "@yarnpkg/sdks": "^3.1.0",
     "angular": "1.8.3",
     "angular-animate": "1.8.3",
     "angular-aria": "1.8.3",
@@ -43,7 +39,6 @@
     "gulp-minify-html": "~1.0.6",
     "gulp-rename": "~2.0.0",
     "gulp-uglify": "~3.0.2",
-    "gulp-yarn": "^4.0.1",
     "jasmine-core": "~5.1.1",
     "jshint": "~2.13.6",
     "karma": "~6.4.2",
