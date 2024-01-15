@@ -12,7 +12,7 @@
     "url": "https://github.com/joelvaneenwyk/browser-extension-tab-modifier/issues"
   },
   "scripts": {
-    "build": "gulp build"
+    "build": "npm exec gulp build"
   },
   "dependencies": {
     "@types/gulp": "^4.0.17",
