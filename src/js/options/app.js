@@ -93,7 +93,7 @@ app.config([
         };
 
         for (const path in routes) {
-            if (routes.hasOwnProperty(path)) {
+            if (Object.prototype.hasOwnProperty.call(routes, path)) {
                 $routeProvider.when(path, routes[path]);
             }
         }

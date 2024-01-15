@@ -8,6 +8,11 @@
     "editor.formatOnSaveMode": "modificationsIfAvailable",
     "editor.maxTokenizationLineLength": 2500
   },
+  "[javascript][json][json5][jsonc]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  },
   "[json][jsonc][json5]": {
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": true
@@ -36,6 +41,7 @@
     "semistandard"
   ],
   "eslint.codeActionsOnSave.mode": "all",
+  "files.autoSave": "afterDelay",
   "jasmineExplorer.config": "tests/jasmine.json",
   "jasmineExplorer.logpanel": true,
   "java.autobuild.enabled": false,
@@ -68,6 +74,8 @@
   },
   "taskExplorer.autoRefresh": true,
   "taskExplorer.clickAction": "Open",
+  "taskExplorer.debug": true,
+  "taskExplorer.debugLevel": 3,
   "taskExplorer.enabledTasks": {
     "ant": false,
     "appPublisher": false,
@@ -94,18 +102,11 @@
     "**/.yarn/unplugged/**",
     "**/dist/**"
   ],
+  "taskExplorer.useGulp": true,
   "testExplorer.addToEditorContextMenu": false,
   "testExplorer.onReload": null,
   "testExplorer.onStart": null,
-  "testExplorer.useNativeTesting": true,
-  "taskExplorer.debug": true,
-  "taskExplorer.debugLevel": 3,
-  "taskExplorer.useGulp": true,
   "testExplorer.showOnRun": true,
   "testExplorer.sort": "byLocation",
-  "[javascript][json][json5][jsonc]": {
-    "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": "explicit"
-    }
-  }
+  "testExplorer.useNativeTesting": true
 }

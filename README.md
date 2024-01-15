@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD033 !-->
+
 # <img src="dist/img/icon_32.png" alt="icon"> Tab Modifier
 
 Take control of your tabs.
@@ -99,7 +101,7 @@ Disguise GitHub as Google
 - **Detection**: Contains
 - **URL fragment**: github.com
 - **Title**: Google
-- **Icon**: https://www.google.com/favicon.ico
+- **Icon**: <https://www.google.com/favicon.ico>
 
 Prevent accidental tab closure:
 
@@ -122,7 +124,7 @@ Set blank icon on Pinterest:
 Get only one GMail tab opened at once:
 
 - **Detection**: Starts with
-- **URL fragment**: https://mail.google.com
+- **URL fragment**: <https://mail.google.com>
 - **Unique**: ON
 
 Pin all PNG images (useless):
@@ -154,7 +156,7 @@ Customize GMail title with Title matcher and URL matcher:
 - **Title matcher**: [a-z]\*@gmail.com
 - **URL matcher**: [a-z]\*.google.com
 
-Tab title will be: "youremail@gmail.com | mail.google.com"
+Tab title will be: "<youremail@gmail.com> | mail.google.com"
 
 Github final path as title for blobs:
 

@@ -10,6 +10,7 @@ const jsonminify = require('gulp-jsonminify');
 const karma = require('karma');
 const Server = karma.Server;
 const parseConfig = require('karma/lib/config').parseConfig;
+const path = require('path');
 
 // Linter
 // ------------------------------------------------------------------------------------------------------
