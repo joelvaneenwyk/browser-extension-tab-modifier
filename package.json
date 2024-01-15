@@ -12,7 +12,10 @@
     "url": "https://github.com/joelvaneenwyk/browser-extension-tab-modifier/issues"
   },
   "scripts": {
-    "build": "npm exec gulp build"
+    "build": "npm exec gulp build",
+    "lint": "npm exec gulp lint",
+    "tests": "npm exec gulp tests",
+    "watch": "npm exec gulp watch"
   },
   "dependencies": {
     "@types/gulp": "^4.0.17",
@@ -25,31 +28,30 @@
     "angular-messages": "1.8.3",
     "angular-mocks": "1.8.3",
     "angular-route": "1.8.3",
-    "angular-ui-tree": "~2.22.6",
+    "angular-ui-tree": "^2.22.6",
     "eslint": "^8.56.0",
-    "eslint-config-standard-with-typescript": "latest",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-n": "^16.6.2",
     "eslint-plugin-promise": "^6.1.1",
     "gulp": "^4.0.2",
-    "gulp-concat": "~2.6.1",
-    "gulp-jscs": "~4.1.0",
-    "gulp-jshint": "~2.1.0",
-    "gulp-jsonminify": "~1.1.0",
-    "gulp-minify-html": "~1.0.6",
-    "gulp-rename": "~2.0.0",
-    "gulp-uglify": "~3.0.2",
-    "jasmine-core": "~5.1.1",
-    "jshint": "~2.13.6",
-    "karma": "~6.4.2",
-    "karma-coverage": "~2.2.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-jshint": "^2.1.0",
+    "gulp-jsonminify": "^1.1.0",
+    "gulp-minify-html": "^1.0.6",
+    "gulp-rename": "^2.0.0",
+    "gulp-uglify": "^3.0.2",
+    "jasmine-core": "^5.1.1",
+    "jshint": "^2.13.6",
+    "karma": "^6.4.2",
+    "karma-coverage": "^2.2.1",
     "karma-jasmine": "^5.1.0",
-    "karma-jasmine-jquery": "~0.1.1",
-    "karma-jasmine-matchers": "~5.0.0",
-    "karma-phantomjs-launcher": "~1.0.0",
+    "karma-jasmine-jquery": "^0.1.1",
+    "karma-jasmine-matchers": "^5.0.0",
+    "karma-phantomjs-launcher": "^1.0.0",
     "karma-spec-reporter": "0.0.36",
-    "phantomjs-prebuilt": "~2.1.0",
-    "ts-node": "^10.9.2",
-    "typescript": "*"
+    "phantomjs-prebuilt": "^2.1.0"
+  },
+  "devDependencies": {
+    "karma-chrome-launcher": "^3.2.0"
   }
 }
