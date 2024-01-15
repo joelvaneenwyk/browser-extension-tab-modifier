@@ -8,7 +8,9 @@ var jshint = require('gulp-jshint');
 var concat = require('gulp-concat');
 var rename = require('gulp-rename');
 var jsonminify = require('gulp-jsonminify');
-var Server = require('karma').Server;
+var karma = require('karma');
+var Server = karma.Server;
+var parseConfig = require('karma/lib/config').parseConfig;
 
 // Linter
 // ------------------------------------------------------------------------------------------------------
@@ -83,8 +85,8 @@ gulp.task(
 
 // gulp tests --coverage=html
 gulp.task('tests', function (done) {
-    var reporters = ['spec'],
-        coverage_reporter = { type: 'text', dir: 'coverage/' };
+    const reporters = ['spec'];
+    const coverage_reporter = { type: 'text', dir: 'coverage/' };
 
     if (args.coverage) {
         reporters.push('coverage');
@@ -94,11 +96,14 @@ gulp.task('tests', function (done) {
         }
     }
 
-    new Server({
-        configFile: __dirname + '/karma.conf.js',
-        reporters: reporters,
-        coverageReporter: coverage_reporter
-    }, done).start();
+    const configFile = __dirname + '/karma.conf.js';
+    const config = parseConfig(
+        configFile, {}, {
+        coverageReporter: coverage_reporter,
+        promiseConfig: true,
+        throwErrors: true
+    });
+    new Server(config, done).start();
 });
 
 gulp.task(
