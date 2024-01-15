@@ -1,116 +1,117 @@
+/**
+ * ESLint configuration file for web extensions.
+ */
+
+/** @type {import('eslint').Linter.StringSeverity} */
+const OFF = "off";
+
+/** @type {import('eslint').Linter.StringSeverity} */
+const WARN = "warn";  // eslint-disable-line no-unused-vars
+
+/** @type {import('eslint').Linter.StringSeverity} */
+const ERROR = "error";
+
+/** @type {import('eslint').Linter.Config} */
 module.exports = {
     extends: ['semistandard', 'standard', 'prettier'],
     env: {
         browser: true,
         commonjs: true,
         es2021: true,
+        webextensions: true,
     },
     parserOptions: {
         ecmaVersion: 'latest',
     },
 
-    ignorePatterns: [
-        '**/*.min.*',
-        '.yarn/cache/**/*',
-        'dist/**/*',
-        'node_modules/**/*',
-        'coverage/**/*',
-    ],
+    globals: {
+        chrome: true,
+        angular: true,
+        app: true,
+    },
 
-    // $ npx eslint-config-prettier karma.conf.js
-    //-----------------------------------------------------------------------
-    // The following rules are unnecessary or might conflict with Prettier:
-    //
-    // - array-bracket-spacing
-    // - brace-style
-    // - comma-dangle
-    // - comma-style
-    // - eol-last
-    // - indent
-    // - key-spacing
-    // - keyword-spacing
-    // - no-mixed-spaces-and-tabs
-    // - no-multiple-empty-lines
-    // - operator-linebreak
-    // - quote-props
-    // - semi
-    // - space-before-blocks
-    // - space-before-function-paren
-    // - space-in-parens
-    // - space-unary-ops
-    // - wrap-iife
-    //
-    // The following rules are enabled but cannot be automatically checked. See:
-    // https://github.com/prettier/eslint-config-prettier#special-rules
-    //
-    // - max-len
-    // - quotes
+    ignorePatterns: ['**/*.min.*', '.yarn/cache/**/*', 'dist/**/*', 'node_modules/**/*', 'coverage/**/*'],
+
     rules: {
-        // "quote-props": [2, "as-needed"],
-        'dot-notation': 2,
-        // semi: [2, "always"],
-        curly: [2, 'all'],
-        // "keyword-spacing": [2, {}],
-        // "space-before-blocks": [2, "always"],
-        // "wrap-iife": 2,
-        // "space-before-function-paren": [2, "always"],
-        'one-var': [2, 'never'],
+        'dot-notation': ERROR,
+        'curly': [ERROR, 'all'],
+        'one-var': [ERROR, 'never'],
+        'no-var': ERROR,
         'no-empty': [
-            2,
+            ERROR,
             {
                 allowEmptyCatch: true,
             },
         ],
-        // "array-bracket-spacing": [2, "always"],
-        // "space-in-parens": [2, "never"],
-        // "key-spacing": [
-        //     2,
-        //     {
-        //         beforeColon: false,
-        //         afterColon: true,
-        //     },
-        // ],
-        // "comma-style": [2, "last"],
-        // "operator-linebreak": [2, "after"],
-        // "space-unary-ops": [
-        //     2,
-        //     {
-        //         words: false,
-        //         nonwords: false,
-        //     },
-        // ],
         'no-implicit-coercion': [
-            2,
+            ERROR,
             {
                 boolean: true,
                 string: true,
                 number: true,
             },
         ],
-        'no-with': 2,
-        'no-multi-str': 2,
-        // "no-multiple-empty-lines": 2,
-        // quotes: [2, "single"],
-        // indent: [
-        //     2,
-        //     4,
+        'no-with': ERROR,
+        'no-multi-str': ERROR,
+        'camelcase': 'off',
+        'consistent-this': [ERROR, 'that'],
+        'yoda': [ERROR, 'never'],
+        'spaced-comment': OFF,
+
+        //
+        // $ npx eslint-config-prettier karma.conf.js
+        //
+        //-----------------------------------------------------------------------
+        // The following rules are unnecessary or might conflict with Prettier:
+        //
+        // 'quote-props': [ERROR, 'as-needed'],
+        // 'semi': [ERROR, 'always'],
+        // 'keyword-spacing': [ERROR, {}],
+        // 'space-before-blocks': [ERROR, 'always'],
+        // 'wrap-iife': ERROR,
+        // 'space-before-function-paren': [ERROR, 'always'],
+        // 'array-bracket-spacing': [ERROR, 'always'],
+        // 'space-in-parens': [ERROR, 'never'],
+        // 'key-spacing': [
+        //     ERROR,
         //     {
-        //         SwitchCase: 1,
+        //         beforeColon: false,
+        //         afterColon: true,
         //     },
         // ],
-        // "no-mixed-spaces-and-tabs": 2,
-        // "comma-dangle": [2, "never"],
-        // "brace-style": [
-        //     2,
-        //     "1tbs",
+        // 'comma-style': [ERROR, 'last'],
+        // 'operator-linebreak': [ERROR, 'after'],
+        // 'space-unary-ops': [
+        //     ERROR,
+        //     {
+        //         words: false,
+        //         nonwords: false,
+        //     },
+        // ],
+        // 'no-multiple-empty-lines': ERROR,
+        // 'indent': [
+        //     ERROR,
+        //     4,
+        //     {
+        //         SwitchCase: WARN,
+        //     },
+        // ],
+        // 'no-mixed-spaces-and-tabs': ERROR,
+        // 'comma-dangle': [ERROR, 'never'],
+        // 'brace-style': [
+        //     ERROR,
+        //     '1tbs',
         //     {
         //         allowSingleLine: true,
         //     },
         // ],
-        // "eol-last": 2,
-        // "max-len": [2, 600],
-        'consistent-this': [2, 'that'],
-        yoda: [2, 'never'],
-        'spaced-comment': 0,
+        // 'eol-last': ERROR,
+        //
+        // The following rules are enabled but cannot be automatically checked. See:
+        //
+        // https://github.com/prettier/eslint-config-prettier#special-rules
+        //
+        // 'max-len': [ERROR, 600],
+        // 'quotes': [ERROR, 'single'],
     },
 };

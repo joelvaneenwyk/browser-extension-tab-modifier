@@ -1,16 +1,33 @@
 {
   "[javascript]": {
-    "editor.maxTokenizationLineLength": 2500,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": true
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "modificationsIfAvailable",
+    "editor.maxTokenizationLineLength": 2500
+  },
+  "[json][jsonc][json5]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "modificationsIfAvailable",
+    "editor.maxTokenizationLineLength": 2500
+  },
+  "angular.trace.server": "messages",
+  "cSpell.customDictionaries": {
+    "custom-dictionary-workspace": {
+      "addWords": true,
+      "name": "custom-dictionary-workspace",
+      "path": "${workspaceFolder:web-extension-tab-modifier}/.cspell/custom-dictionary-workspace.txt",
+      "scope": "workspace"
     }
   },
-  "search.exclude": {
-    "**/.yarn": true,
-    "**/.pnp.*": true
-  },
   "cSpell.words": [
+    "camelcase",
     "hcbgadmbdkiilgpifjgcakjehmafcjai",
     "iife",
     "jsonminify",
@@ -18,35 +35,74 @@
     "nonwords",
     "semistandard"
   ],
+  "eslint.codeActionsOnSave.mode": "all",
+  "jasmineExplorer.config": "tests/jasmine.json",
+  "jasmineExplorer.logpanel": true,
+  "java.autobuild.enabled": false,
   "jest.autoRun": "off",
   "jest.testExplorer": {
     "enable": false
   },
-  "jestrunner.codeLensSelector": "",
   "jestrunner.codeLens": [],
-  "karmaTestExplorer.autoWatchEnabled": true,
-  "karmaTestExplorer.logLevel": "debug",
-  "karmaTestExplorer.testFiles": [
-    "src/**/*{.,-,_}{test,spec}.{ts,js}",
-    "src/**/{test,spec}{.,-,_}*.{ts,js}"
-  ],
-  "prettier.enable": true,
-  "java.autobuild.enabled": false,
-  "jasmineExplorer.logpanel": true,
-  "jasmineExplorer.config": "tests/jasmine.json",
-  "testExplorer.addToEditorContextMenu": false,
-  "testExplorer.useNativeTesting": false,
-  "testExplorer.onStart": null,
-  "testExplorer.onReload": null,
-  "angular.trace.server": "messages",
-  "karmaTestExplorer.browser": "Edge",
+  "jestrunner.codeLensSelector": "",
   "karmaTestExplorer.autoWatchBatchDelay": 800,
+  "karmaTestExplorer.autoWatchEnabled": true,
+  "karmaTestExplorer.browser": "Edge",
   "karmaTestExplorer.containerMode": "enabled",
   "karmaTestExplorer.enableExtension": true,
   "karmaTestExplorer.excludeDisabledTests": true,
   "karmaTestExplorer.karmaConfFilePath": "karma.conf.js",
   "karmaTestExplorer.karmaReporterLogLevel": "warn",
+  "karmaTestExplorer.logLevel": "debug",
   "karmaTestExplorer.nonHeadlessModeEnabled": true,
   "karmaTestExplorer.projectType": "karma",
-  "karmaTestExplorer.testFramework": "jasmine"
+  "karmaTestExplorer.testFiles": ["src/**/*{.,-,_}{test,spec}.{ts,js}", "src/**/{test,spec}{.,-,_}*.{ts,js}"],
+  "karmaTestExplorer.testFramework": "jasmine",
+  "prettier.enable": true,
+  "search.exclude": {
+    "**/.pnp.*": true,
+    "**/.yarn": true
+  },
+  "taskExplorer.autoRefresh": true,
+  "taskExplorer.clickAction": "Open",
+  "taskExplorer.enabledTasks": {
+    "ant": false,
+    "appPublisher": false,
+    "composer": false,
+    "gradle": false,
+    "grunt": false,
+    "gulp": true,
+    "make": false,
+    "maven": false,
+    "npm": true,
+    "nsis": false,
+    "perl": false,
+    "pipenv": false,
+    "python": false,
+    "ruby": false,
+    "tsc": false,
+    "workspace": true
+  },
+  "taskExplorer.enableSideBar": true,
+  "taskExplorer.exclude": [
+    "**/.vscode-test/**",
+    "**/node_modules/**",
+    "**/.yarn/cache/**",
+    "**/.yarn/unplugged/**",
+    "**/dist/**"
+  ],
+  "testExplorer.addToEditorContextMenu": false,
+  "testExplorer.onReload": null,
+  "testExplorer.onStart": null,
+  "testExplorer.useNativeTesting": true,
+  "taskExplorer.debug": true,
+  "taskExplorer.debugLevel": 3,
+  "taskExplorer.useGulp": true,
+  "testExplorer.showOnRun": true,
+  "testExplorer.sort": "byLocation",
+  "[javascript][json][json5][jsonc]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  }
 }

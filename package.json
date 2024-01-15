@@ -13,12 +13,14 @@
   },
   "scripts": {
     "build": "npm exec gulp build",
-    "lint": "npm exec gulp lint",
+    "lint": "npm exec eslint \"*.js\" \"src/**/*.js\"",
+    "lint:fix": "npm exec eslint \"*.js\" \"src/**/*.js\" --fix",
     "tests": "npm exec gulp tests",
     "watch": "npm exec gulp watch"
   },
   "prettier": {
-    "singleQuote": true
+    "singleQuote": true,
+    "quoteProps": "consistent"
   },
   "dependencies": {
     "angular": "1.8.3",

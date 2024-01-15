@@ -1,15 +1,15 @@
 'use strict';
 
 // Gulp dependencies
-var args = require('yargs').argv;
-var gulp = require('gulp');
-var jshint = require('gulp-jshint');
-var concat = require('gulp-concat');
-var rename = require('gulp-rename');
-var jsonminify = require('gulp-jsonminify');
-var karma = require('karma');
-var Server = karma.Server;
-var parseConfig = require('karma/lib/config').parseConfig;
+const args = require('yargs').argv;
+const gulp = require('gulp');
+const jshint = require('gulp-jshint');
+const concat = require('gulp-concat');
+const rename = require('gulp-rename');
+const jsonminify = require('gulp-jsonminify');
+const karma = require('karma');
+const Server = karma.Server;
+const parseConfig = require('karma/lib/config').parseConfig;
 
 // Linter
 // ------------------------------------------------------------------------------------------------------
