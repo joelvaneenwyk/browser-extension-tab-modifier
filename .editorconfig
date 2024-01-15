@@ -4,15 +4,21 @@
 root = true
 
 [*]
-indent_style = space
-indent_size = 4
-end_of_line = crlf
 charset = utf-8
 trim_trailing_whitespace = true
 insert_final_newline = true
 
-[*.{js}]
+# Prettier. See https://github.com/prettier/prettier/blob/main/docs/configuration.md
+indent_style = space
+indent_size = 2
+max_line_length = 120
+
+[{*.js, .eslintrc.js, *.ts, *.tsx, *.jsx}]
 indent_size = 4
 
 [*.{json}]
 indent_size = 2
+
+[*.{cmd,bat}]
+indent_size = 4
+end_of_line = crlf
