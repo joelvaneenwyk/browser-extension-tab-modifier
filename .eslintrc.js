@@ -9,7 +9,13 @@ module.exports = {
         ecmaVersion: 'latest',
     },
 
-    ignorePatterns: ['**/*.min.*', '.yarn/cache/**/*', 'dist/**/*', 'node_modules/**/*', 'coverage/**/*'],
+    ignorePatterns: [
+        '**/*.min.*',
+        '.yarn/cache/**/*',
+        'dist/**/*',
+        'node_modules/**/*',
+        'coverage/**/*',
+    ],
 
     // $ npx eslint-config-prettier karma.conf.js
     //-----------------------------------------------------------------------
