@@ -1,13 +1,16 @@
 module.exports = {
-    extends: ["semistandard", "standard", "prettier"],
+    extends: ['semistandard', 'standard', 'prettier'],
     env: {
         browser: true,
         commonjs: true,
         es2021: true,
     },
     parserOptions: {
-        ecmaVersion: "latest",
+        ecmaVersion: 'latest',
     },
+
+    ignorePatterns: ['**/*.min.*', '.yarn/cache/**/*', 'dist/**/*', 'node_modules/**/*', 'coverage/**/*'],
+
     // $ npx eslint-config-prettier karma.conf.js
     //-----------------------------------------------------------------------
     // The following rules are unnecessary or might conflict with Prettier:
@@ -38,15 +41,15 @@ module.exports = {
     // - quotes
     rules: {
         // "quote-props": [2, "as-needed"],
-        "dot-notation": 2,
+        'dot-notation': 2,
         // semi: [2, "always"],
-        curly: [2, "all"],
+        curly: [2, 'all'],
         // "keyword-spacing": [2, {}],
         // "space-before-blocks": [2, "always"],
         // "wrap-iife": 2,
         // "space-before-function-paren": [2, "always"],
-        "one-var": [2, "always"],
-        "no-empty": [
+        'one-var': [2, 'never'],
+        'no-empty': [
             2,
             {
                 allowEmptyCatch: true,
@@ -70,7 +73,7 @@ module.exports = {
         //         nonwords: false,
         //     },
         // ],
-        "no-implicit-coercion": [
+        'no-implicit-coercion': [
             2,
             {
                 boolean: true,
@@ -78,8 +81,8 @@ module.exports = {
                 number: true,
             },
         ],
-        "no-with": 2,
-        "no-multi-str": 2,
+        'no-with': 2,
+        'no-multi-str': 2,
         // "no-multiple-empty-lines": 2,
         // quotes: [2, "single"],
         // indent: [
@@ -100,8 +103,8 @@ module.exports = {
         // ],
         // "eol-last": 2,
         // "max-len": [2, 600],
-        "consistent-this": [2, "that"],
-        yoda: [2, "never"],
-        "spaced-comment": 0,
+        'consistent-this': [2, 'that'],
+        yoda: [2, 'never'],
+        'spaced-comment': 0,
     },
 };

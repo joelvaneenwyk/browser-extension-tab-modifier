@@ -12,7 +12,10 @@
     },
     "cSpell.words": [
         "hcbgadmbdkiilgpifjgcakjehmafcjai",
+        "iife",
         "jsonminify",
+        "linebreak",
+        "nonwords",
         "semistandard"
     ],
     "jest.autoRun": "off",

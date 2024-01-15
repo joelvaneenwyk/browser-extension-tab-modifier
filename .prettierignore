@@ -1,0 +1,4 @@
+**/*.min.*
+**/*.svg
+*.lock
+*-lock.json
