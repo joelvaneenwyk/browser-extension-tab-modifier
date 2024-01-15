@@ -35,13 +35,15 @@
                 <!-- URL fragment -->
                 <md-input-container flex="50">
                     <label for="rule_url_fragment" class="md-body-1">URL fragment</label>
-                    <input id="rule_url_fragment" type="text" ng-model="rule.url_fragment" placeholder="e.g. mail.google.com to catch GMail" required>
+                    <input id="rule_url_fragment" type="text" ng-model="rule.url_fragment"
+                        placeholder="e.g. mail.google.com to catch GMail" required>
                     <span class="md-caption" ng-if="rule.detection !== 'REGEXP'">URL fragment to find</span>
                     <span class="md-caption" ng-if="rule.detection === 'REGEXP'">Regular expression to match</span>
                 </md-input-container>
             </div>
 
-            <p class="md-primary md-margin-0" ng-if="rule.url_fragment === null">The URL fragment is required by the extension to detect when to apply your actions</p>
+            <p class="md-primary md-margin-0" ng-if="rule.url_fragment === null">The URL fragment is required by the
+                extension to detect when to apply your actions</p>
             <p class="md-primary md-margin-0" ng-if="rule.url_fragment !== null">
                 The following actions will be applied when the URL
                 <u ng-if="rule.detection === 'STARTS'">starts with</u>
@@ -58,7 +60,9 @@
                 <md-input-container>
                     <label for="rule_title" class="md-body-1">Title</label>
                     <input id="rule_title" type="text" ng-model="rule.tab.title" placeholder="e.g. Hey {title}">
-                    <span class="md-caption">The new title you want to display in the tab.<br>You can inject any DOM content with <code>{selector}</code>. Examples: <code>{title}</code> for website title, <code>{h1}</code>, <code>{#id}</code>, <code>{.class}</code>, etc.</span>
+                    <span class="md-caption">The new title you want to display in the tab.<br>You can inject any DOM
+                        content with <code>{selector}</code>. Examples: <code>{title}</code> for website title,
+                        <code>{h1}</code>, <code>{#id}</code>, <code>{.class}</code>, etc.</span>
                 </md-input-container>
 
                 <!-- Icon -->
@@ -69,20 +73,29 @@
                         <label>Select icon</label>
                         <md-select ng-model="rule.tab.icon">
                             <md-optgroup label="Chrome">
-                                <md-option layout="row" layout-align="start center" ng-repeat="icon in icon_list | filter: { category: 'chrome' }:true | orderBy: 'name'" ng-value="icon.value">
-                                    <img class="md-img-select md-icon-16x" ng-src="../img/{{ icon.value }}" alt="{{ icon.name }}"> {{ icon.name }}
+                                <md-option layout="row" layout-align="start center"
+                                    ng-repeat="icon in icon_list | filter: { category: 'chrome' }:true | orderBy: 'name'"
+                                    ng-value="icon.value">
+                                    <img class="md-img-select md-icon-16x" ng-src="../img/{{ icon.value }}"
+                                        alt="{{ icon.name }}"> {{ icon.name }}
                                 </md-option>
                             </md-optgroup>
 
                             <md-optgroup label="Color">
-                                <md-option layout="row" layout-align="start center" ng-repeat="icon in icon_list | filter: { category: 'color' }:true | orderBy: 'name'" ng-value="icon.value">
-                                    <img class="md-img-select md-icon-16x" ng-src="../img/{{ icon.value }}" alt="{{ icon.name }}"> {{ icon.name }}
+                                <md-option layout="row" layout-align="start center"
+                                    ng-repeat="icon in icon_list | filter: { category: 'color' }:true | orderBy: 'name'"
+                                    ng-value="icon.value">
+                                    <img class="md-img-select md-icon-16x" ng-src="../img/{{ icon.value }}"
+                                        alt="{{ icon.name }}"> {{ icon.name }}
                                 </md-option>
                             </md-optgroup>
 
                             <md-optgroup label="Color Alt">
-                                <md-option layout="row" layout-align="start center" ng-repeat="icon in icon_list | filter: { category: 'color-alt' }:true | orderBy: 'name'" ng-value="icon.value">
-                                    <img class="md-img-select md-icon-16x" ng-src="../img/{{ icon.value }}" alt="{{ icon.name }}"> {{ icon.name }}
+                                <md-option layout="row" layout-align="start center"
+                                    ng-repeat="icon in icon_list | filter: { category: 'color-alt' }:true | orderBy: 'name'"
+                                    ng-value="icon.value">
+                                    <img class="md-img-select md-icon-16x" ng-src="../img/{{ icon.value }}"
+                                        alt="{{ icon.name }}"> {{ icon.name }}
                                 </md-option>
                             </md-optgroup>
                         </md-select>
@@ -91,8 +104,12 @@
                     <!-- URL Icon -->
                     <md-input-container flex-offset="5" flex="75">
                         <label for="rule_icon" class="md-body-1">Icon</label>
-                        <input id="rule_icon" type="text" ng-model="rule.tab.icon" placeholder="e.g. https://google.com/favicon.ico">
-                        <span class="md-caption"><a class="md-primary" href="" ng-click="clearIcon()">Clear icon</a>. You can set a custom URL or data URI for the new icon, no local path <a class="md-primary" href="https://github.com/sylouuu/chrome-tab-modifier#local-icon-path-doesnt-work" target="_blank">accepted</a></span>
+                        <input id="rule_icon" type="text" ng-model="rule.tab.icon"
+                            placeholder="e.g. https://google.com/favicon.ico">
+                        <span class="md-caption"><a class="md-primary" href="" ng-click="clearIcon()">Clear icon</a>.
+                            You can set a custom URL or data URI for the new icon, no local path <a class="md-primary"
+                                href="https://github.com/sylouuu/chrome-tab-modifier#local-icon-path-doesnt-work"
+                                target="_blank">accepted</a></span>
                     </md-input-container>
                 </div>
 
@@ -120,7 +137,8 @@
                     <!-- Muted -->
                     <md-switch class="md-accent md-2-line" flex ng-model="rule.tab.muted" aria-label="Muted">
                         <p>Muted</p>
-                        <span class="md-caption">Will mute the tab (read the <a class="md-primary" href="#/help" target="_blank" aria-label="Help section">help</a> section)</span>
+                        <span class="md-caption">Will mute the tab (read the <a class="md-primary" href="#/help"
+                                target="_blank" aria-label="Help section">help</a> section)</span>
                     </md-switch>
                 </div>
 
@@ -129,14 +147,18 @@
                     <md-input-container class="md-margin-bottom-0" flex="50">
                         <label for="rule_title_matcher" class="md-body-1">Title matcher</label>
                         <input id="rule_title_matcher" type="text" ng-model="rule.tab.title_matcher">
-                        <span class="md-caption">Regular expression to search string fragments in title<br> (read the <a class="md-primary" href="#/help" target="_blank" aria-label="Help section">help</a> section)</span>
+                        <span class="md-caption">Regular expression to search string fragments in title<br> (read the <a
+                                class="md-primary" href="#/help" target="_blank" aria-label="Help section">help</a>
+                            section)</span>
                     </md-input-container>
 
                     <!-- URL matcher -->
                     <md-input-container class="md-margin-bottom-0" flex="50">
                         <label for="rule_url_matcher" class="md-body-1">URL matcher</label>
                         <input id="rule_url_matcher" type="text" ng-model="rule.tab.url_matcher">
-                        <span class="md-caption">Regular expression to search string fragments in URL<br> (read the <a class="md-primary" href="#/help" target="_blank" aria-label="Help section">help</a> section)</span>
+                        <span class="md-caption">Regular expression to search string fragments in URL<br> (read the <a
+                                class="md-primary" href="#/help" target="_blank" aria-label="Help section">help</a>
+                            section)</span>
                     </md-input-container>
                 </div>
             </div>
