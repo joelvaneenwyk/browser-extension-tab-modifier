@@ -1,4 +1,4 @@
-var app = angular.module('TabModifier', [
+const app = angular.module('TabModifier', [
     'ngRoute',
     'ngAnimate',
     'ngAria',
@@ -77,7 +77,7 @@ app.config([
         AnalyticsProvider.setHybridMobileSupport(true);
         AnalyticsProvider.setDomainName('none');
 
-        var routes = {
+        const routes = {
             '/settings': {
                 templateUrl: '/html/settings.html',
                 controller: 'SettingsController',
@@ -92,8 +92,8 @@ app.config([
             },
         };
 
-        for (var path in routes) {
-            if (routes.hasOwnProperty(path)) {
+        for (const path in routes) {
+            if (Object.prototype.hasOwnProperty.call(routes, path)) {
                 $routeProvider.when(path, routes[path]);
             }
         }
@@ -106,6 +106,52 @@ app.run([
     'Analytics',
     function ($rootScope, $location, Analytics) {
         $rootScope.location = $location;
+    },
+]);
+
+app.directive('inputFileButton', function () {
+    return {
+        restrict: 'E',
+        link: function (scope, elem) {
+            const button = elem.find('button');
+            const input = elem.find('input');
+
+            input.css({ display: 'none' });
+
+            button.bind('click', function () {
+                input[0].click();
+            });
+        },
+    };
+});
+
+app.directive('onReadFile', [
+    '$parse',
+    function ($parse) {
+        return {
+            restrict: 'A',
+            scope: false,
+            link: function (scope, element, attrs) {
+                const fn = $parse(attrs.onReadFile);
+
+                element.on('change', function (onChangeEvent) {
+                    const reader = new FileReader();
+
+                    reader.onload = function (onLoadEvent) {
+                        scope.$apply(function () {
+                            fn(scope, {
+                                $fileContent: onLoadEvent.target.result,
+                            });
+                        });
+                    };
+
+                    reader.readAsText(
+                        (onChangeEvent.srcElement || onChangeEvent.target)
+                            .files[0],
+                    );
+                });
+            },
+        };
     },
 ]);
 
@@ -141,7 +187,7 @@ app.controller('SettingsController', [
     'TabModifier',
     'Analytics',
     function ($scope, $mdDialog, $mdToast, $location, TabModifier, Analytics) {
-        var tab_modifier = new TabModifier();
+        const tab_modifier = new TabModifier();
 
         chrome.storage.local.get('tab_modifier', function (items) {
             if (items.tab_modifier === undefined) {
@@ -179,10 +225,10 @@ app.controller('SettingsController', [
                 typeof replace_existing_rules !== 'undefined'
                     ? replace_existing_rules
                     : true;
-            var result = tab_modifier.checkFileBeforeImport(content);
+            const result = tab_modifier.checkFileBeforeImport(content);
 
             if (result === true) {
-                var inputId = replace_existing_rules
+                const inputId = replace_existing_rules
                     ? 'importReplace'
                     : 'importAdd';
                 document.getElementById(inputId).value = '';
@@ -204,7 +250,7 @@ app.controller('SettingsController', [
 
                 Analytics.trackEvent('tab-rules', 'import-success');
             } else {
-                var message;
+                let message;
 
                 switch (result) {
                     case 'INVALID_JSON_FORMAT':
@@ -238,7 +284,7 @@ app.controller('SettingsController', [
 
         // Delete all tab rules action
         $scope.deleteRules = function (evt) {
-            var confirm = $mdDialog
+            const confirm = $mdDialog
                 .confirm()
                 .clickOutsideToClose(false)
                 .title('Delete all')
@@ -289,8 +335,8 @@ app.controller('TabRulesController', [
         TabModifier,
         Analytics,
     ) {
-        var tab_modifier = new TabModifier(),
-            icon_list = [];
+        const tab_modifier = new TabModifier();
+        let icon_list = [];
 
         // Load icon list
         $http.get('/js/icons.min.json').then(function (request) {
@@ -329,7 +375,7 @@ app.controller('TabRulesController', [
 
         // Show modal form
         $scope.showForm = function (evt, rule) {
-            var index =
+            const index =
                 rule === undefined ? null : tab_modifier.rules.indexOf(rule);
 
             $mdDialog
@@ -386,7 +432,7 @@ app.controller('TabRulesController', [
 
         // Delete a rule
         $scope.delete = function (evt, rule) {
-            var confirm = $mdDialog
+            const confirm = $mdDialog
                 .confirm()
                 .clickOutsideToClose(false)
                 .title('Delete rule')
@@ -426,7 +472,7 @@ app.controller('TabRulesController', [
 
         // New install
         if ($routeParams.event === 'install') {
-            var confirm = $mdDialog
+            const confirm = $mdDialog
                 .confirm()
                 .clickOutsideToClose(true)
                 .title('Greetings')
@@ -542,82 +588,38 @@ app.controller('FormModalController', [
     },
 ]);
 
-app.directive('inputFileButton', function () {
-    return {
-        restrict: 'E',
-        link: function (scope, elem) {
-            var button = elem.find('button'),
-                input = elem.find('input');
-
-            input.css({ display: 'none' });
-
-            button.bind('click', function () {
-                input[0].click();
-            });
-        },
-    };
-});
-
-app.directive('onReadFile', [
-    '$parse',
-    function ($parse) {
-        return {
-            restrict: 'A',
-            scope: false,
-            link: function (scope, element, attrs) {
-                var fn = $parse(attrs.onReadFile);
-
-                element.on('change', function (onChangeEvent) {
-                    var reader = new FileReader();
-
-                    reader.onload = function (onLoadEvent) {
-                        scope.$apply(function () {
-                            fn(scope, {
-                                $fileContent: onLoadEvent.target.result,
-                            });
-                        });
-                    };
-
-                    reader.readAsText(
-                        (onChangeEvent.srcElement || onChangeEvent.target)
-                            .files[0],
-                    );
-                });
-            },
-        };
-    },
-]);
-
 app.factory('Rule', function () {
-    var Rule = function (properties) {
-        this.name = null;
-        this.detection = 'CONTAINS';
-        this.url_fragment = null;
-        this.tab = {
-            title: null,
-            icon: null,
-            pinned: false,
-            protected: false,
-            unique: false,
-            muted: false,
-            title_matcher: null,
-            url_matcher: null,
-        };
+    class rule {
+        constructor(properties) {
+            this.name = null;
+            this.detection = 'CONTAINS';
+            this.url_fragment = null;
+            this.tab = {
+                title: null,
+                icon: null,
+                pinned: false,
+                protected: false,
+                unique: false,
+                muted: false,
+                title_matcher: null,
+                url_matcher: null,
+            };
 
-        angular.extend(this, properties);
-    };
+            angular.extend(this, properties);
+        }
 
-    Rule.prototype.setModel = function (obj) {
-        angular.extend(this, obj);
-    };
+        setModel(obj) {
+            angular.extend(this, obj);
+        }
+    }
 
-    return Rule;
+    return rule;
 });
 
 app.factory('TabModifier', [
     'Rule',
     function (Rule) {
-        var TabModifier = function (properties) {
+        const tab_modifier = function (properties) {
             this.settings = {
                 enable_new_version_notification: false,
             };
@@ -626,19 +628,19 @@ app.factory('TabModifier', [
             angular.extend(this, properties);
         };
 
-        TabModifier.prototype.setModel = function (obj) {
+        tab_modifier.prototype.setModel = function (obj) {
             angular.extend(this, obj);
         };
 
-        TabModifier.prototype.addRule = function (rule) {
+        tab_modifier.prototype.addRule = function (rule) {
             this.rules.push(rule);
         };
 
-        TabModifier.prototype.removeRule = function (rule) {
+        tab_modifier.prototype.removeRule = function (rule) {
             this.rules.splice(this.rules.indexOf(rule), 1);
         };
 
-        TabModifier.prototype.save = function (rule, index) {
+        tab_modifier.prototype.save = function (rule, index) {
             if (index === null || index === undefined) {
                 this.addRule(rule);
             } else {
@@ -646,12 +648,12 @@ app.factory('TabModifier', [
             }
         };
 
-        TabModifier.prototype.build = function (data, replace_existing_rules) {
+        tab_modifier.prototype.build = function (data, replace_existing_rules) {
             replace_existing_rules =
                 typeof replace_existing_rules !== 'undefined'
                     ? replace_existing_rules
                     : true;
-            var self = this;
+            const that = this;
 
             if (data.settings !== undefined) {
                 this.settings = data.settings;
@@ -662,18 +664,18 @@ app.factory('TabModifier', [
             }
 
             angular.forEach(data.rules, function (rule) {
-                self.addRule(new Rule(rule));
+                that.addRule(new Rule(rule));
             });
         };
 
-        TabModifier.prototype.sync = function () {
+        tab_modifier.prototype.sync = function () {
             chrome.storage.local.set({ tab_modifier: this });
         };
 
-        TabModifier.prototype.checkFileBeforeImport = function (json) {
+        tab_modifier.prototype.checkFileBeforeImport = function (json) {
             if (json !== undefined) {
                 try {
-                    var settings = JSON.parse(json);
+                    const settings = JSON.parse(json);
 
                     if ('rules' in settings === false) {
                         return 'INVALID_SETTINGS';
@@ -688,7 +690,7 @@ app.factory('TabModifier', [
             }
         };
 
-        TabModifier.prototype.import = function (json, replace_existing_rules) {
+        tab_modifier.prototype.import = function (json, replace_existing_rules) {
             replace_existing_rules =
                 typeof replace_existing_rules !== 'undefined'
                     ? replace_existing_rules
@@ -699,20 +701,20 @@ app.factory('TabModifier', [
             return this;
         };
 
-        TabModifier.prototype.export = function () {
-            var blob = new Blob([JSON.stringify(this, null, 4)], {
+        tab_modifier.prototype.export = function () {
+            const blob = new Blob([JSON.stringify(this, null, 4)], {
                 type: 'text/plain',
             });
 
             return (window.URL || window.webkitURL).createObjectURL(blob);
         };
 
-        TabModifier.prototype.deleteRules = function () {
+        tab_modifier.prototype.deleteRules = function () {
             this.setModel({ rules: [] });
 
             return this;
         };
 
-        return TabModifier;
+        return tab_modifier;
     },
 ]);

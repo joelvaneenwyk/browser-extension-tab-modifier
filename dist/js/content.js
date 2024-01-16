@@ -1,55 +1,38 @@
-var w = window;
+const w = window;
 
 chrome.storage.local.get('tab_modifier', function (items) {
     if (items.tab_modifier === undefined) {
         return;
     }
 
-    var tab_modifier = items.tab_modifier,
-        rule = null,
-        processPage;
+    const tab_modifier = items.tab_modifier;
+    let rule = null;
 
-    processPage = function () {
+    const processPage = function () {
         // Check if a rule is available
-        for (var i = 0; i < tab_modifier.rules.length; i++) {
-            if (
-                tab_modifier.rules[i].detection === undefined ||
-                tab_modifier.rules[i].detection === 'CONTAINS'
-            ) {
-                if (
-                    location.href.indexOf(
-                        tab_modifier.rules[i].url_fragment,
-                    ) !== -1
-                ) {
+        for (let i = 0; i < tab_modifier.rules.length; i++) {
+            if (tab_modifier.rules[i].detection === undefined || tab_modifier.rules[i].detection === 'CONTAINS') {
+                if (location.href.indexOf(tab_modifier.rules[i].url_fragment) !== -1) {
                     rule = tab_modifier.rules[i];
                     break;
                 }
             } else {
                 switch (tab_modifier.rules[i].detection) {
                     case 'STARTS':
-                        if (
-                            location.href.startsWith(
-                                tab_modifier.rules[i].url_fragment,
-                            ) === true
-                        ) {
+                        if (location.href.startsWith(tab_modifier.rules[i].url_fragment) === true) {
                             rule = tab_modifier.rules[i];
                             break;
                         }
                         break;
                     case 'ENDS':
-                        if (
-                            location.href.endsWith(
-                                tab_modifier.rules[i].url_fragment,
-                            ) === true
-                        ) {
+                        if (location.href.endsWith(tab_modifier.rules[i].url_fragment) === true) {
                             rule = tab_modifier.rules[i];
                             break;
                         }
                         break;
                     case 'REGEXP':
-                        var regexp = new RegExp(
-                            tab_modifier.rules[i].url_fragment,
-                        );
+                        // eslint-disable-next-line no-case-declarations
+                        const regexp = new RegExp(tab_modifier.rules[i].url_fragment);
 
                         if (regexp.test(location.href) === true) {
                             rule = tab_modifier.rules[i];
@@ -57,9 +40,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
                         }
                         break;
                     case 'EXACT':
-                        if (
-                            location.href === tab_modifier.rules[i].url_fragment
-                        ) {
+                        if (location.href === tab_modifier.rules[i].url_fragment) {
                             rule = tab_modifier.rules[i];
                             break;
                         }
@@ -73,16 +54,14 @@ chrome.storage.local.get('tab_modifier', function (items) {
             return;
         }
 
-        var getTextBySelector, updateTitle, processTitle, processIcon;
-
         /**
          * Returns the text related to the given CSS selector
          * @param selector
          * @returns {string}
          */
-        getTextBySelector = function (selector) {
-            var el = document.querySelector(selector),
-                value = '';
+        const getTextBySelector = function (selector) {
+            let el = document.querySelector(selector);
+            let value = '';
 
             if (el !== null) {
                 el = el.childNodes[0];
@@ -106,7 +85,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
          * @param value
          * @returns {*}
          */
-        updateTitle = function (title, tag, value) {
+        const updateTitle = function (title, tag, value) {
             if (value === '') {
                 return title;
             }
@@ -120,14 +99,15 @@ chrome.storage.local.get('tab_modifier', function (items) {
          * @param current_title
          * @returns {*}
          */
-        processTitle = function (current_url, current_title) {
-            var title = rule.tab.title,
-                matches = title.match(/\{([^}]+)}/g),
-                i;
+        const processTitle = function (current_url, current_title) {
+            let title = rule.tab.title;
+            let matches = title.match(/\{([^}]+)}/g);
+            let i;
 
             // Handle curly braces tags inside title
             if (matches !== null) {
-                var selector, text;
+                let selector;
+                let text;
 
                 for (i = 0; i < matches.length; i++) {
                     selector = matches[i].substring(1, matches[i].length - 1);
@@ -139,10 +119,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
             // Handle title_matcher
             if (rule.tab.title_matcher !== null) {
                 try {
-                    matches = current_title.match(
-                        new RegExp(rule.tab.title_matcher),
-                        'g',
-                    );
+                    matches = current_title.match(new RegExp(rule.tab.title_matcher), 'g');
 
                     if (matches !== null) {
                         for (i = 0; i < matches.length; i++) {
@@ -157,10 +134,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
             // Handle url_matcher
             if (rule.tab.url_matcher !== null) {
                 try {
-                    matches = current_url.match(
-                        new RegExp(rule.tab.url_matcher),
-                        'g',
-                    );
+                    matches = current_url.match(new RegExp(rule.tab.url_matcher), 'g');
 
                     if (matches !== null) {
                         for (i = 0; i < matches.length; i++) {
@@ -180,10 +154,8 @@ chrome.storage.local.get('tab_modifier', function (items) {
          * @param new_icon
          * @returns {boolean}
          */
-        processIcon = function (new_icon) {
-            var el, icon, link;
-
-            el = document.querySelectorAll('head link[rel*="icon"]');
+        const processIcon = function (new_icon) {
+            const el = document.querySelectorAll('head link[rel*="icon"]');
 
             // Remove existing favicons
             Array.prototype.forEach.call(el, function (node) {
@@ -191,13 +163,11 @@ chrome.storage.local.get('tab_modifier', function (items) {
             });
 
             // Set preconfigured or custom (http|https|data) icon
-            icon =
-                /^(https?|data):/.test(new_icon) === true
-                    ? new_icon
-                    : chrome.extension.getURL('/img/' + new_icon);
+            const icon =
+                /^(https?|data):/.test(new_icon) === true ? new_icon : chrome.extension.getURL('/img/' + new_icon);
 
             // Create new favicon
-            link = document.createElement('link');
+            const link = document.createElement('link');
             link.type = 'image/x-icon';
             link.rel = 'icon';
             link.href = icon;
@@ -214,11 +184,10 @@ chrome.storage.local.get('tab_modifier', function (items) {
             }
         }
 
-        var title_changed_by_me = false,
-            observer_title;
+        let title_changed_by_me = false;
 
         // Set up a new observer
-        observer_title = new window.WebKitMutationObserver(function (
+        const observer_title = new window.WebKitMutationObserver(function (
             mutations,
         ) {
             if (title_changed_by_me === true) {
@@ -255,11 +224,10 @@ chrome.storage.local.get('tab_modifier', function (items) {
         if (rule.tab.icon !== null) {
             processIcon(rule.tab.icon);
 
-            var icon_changed_by_me = false,
-                observer_icon;
+            let icon_changed_by_me = false;
 
             // Set up a new observer
-            observer_icon = new window.WebKitMutationObserver(function (
+            const observer_icon = new window.WebKitMutationObserver(function (
                 mutations,
             ) {
                 if (icon_changed_by_me === true) {

@@ -1,13 +1,13 @@
-/*jshint esversion: 6, loopfunc: true */
+/**
+ * Background processing script for tab modification extension.
+ */
 
-let options_url = chrome.extension.getURL('html/options.html'),
-    openOptionsPage,
-    getStorage;
+const options_url = chrome.extension.getURL('html/options.html');
 
 // --------------------------------------------------------------------------------------------------------
 // Functions
 
-openOptionsPage = function (hash) {
+const openOptionsPage = function (hash) {
     chrome.tabs.query({ url: options_url }, function (tabs) {
         if (tabs.length > 0) {
             chrome.tabs.update(
@@ -28,7 +28,7 @@ openOptionsPage = function (hash) {
     });
 };
 
-getStorage = function (callback) {
+const getStorage = function (callback) {
     chrome.storage.local.get('tab_modifier', function (items) {
         callback(items.tab_modifier);
     });
@@ -45,7 +45,8 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
                     return;
                 }
 
-                let tab, tab_id;
+                let tab;
+                let tab_id;
 
                 chrome.tabs.query({}, function (tabs) {
                     for (let i = 0; i < tabs.length; i++) {
@@ -131,7 +132,7 @@ chrome.contextMenus.create({
 
 chrome.contextMenus.onClicked.addListener(function (info, tab) {
     if (info.menuItemId === 'rename-tab') {
-        let title = prompt(
+        const title = prompt(
             'Enter the new title, a Tab rule will be automatically created for you based on current URL',
         );
 
@@ -145,7 +146,7 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
                 };
             }
 
-            let rule = {
+            const rule = {
                 name:
                     'Rule created from right-click (' +
                     tab.url.replace(/(^\w+:|^)\/\//, '').substring(0, 15) +
@@ -153,7 +154,7 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
                 detection: 'CONTAINS',
                 url_fragment: tab.url,
                 tab: {
-                    title: title,
+                    title,
                     icon: null,
                     pinned: false,
                     protected: false,
@@ -166,7 +167,7 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
 
             tab_modifier.rules.push(rule);
 
-            chrome.storage.local.set({ tab_modifier: tab_modifier });
+            chrome.storage.local.set({ tab_modifier });
 
             chrome.tabs.reload(tab.id);
         });
