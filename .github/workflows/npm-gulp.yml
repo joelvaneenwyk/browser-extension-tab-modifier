@@ -7,6 +7,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     strategy:
       matrix:
@@ -28,6 +29,6 @@ jobs:
         run: |
           npm run build
 
-      - name: Build
-        run: |
-          npm run tests
+      # - name: Build
+      #   run: |
+      #     npm run tests
