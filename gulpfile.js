@@ -1,34 +1,16 @@
 'use strict';
 
 // Gulp dependencies
-const args = require('yargs').argv;
 const gulp = require('gulp');
-const jshint = require('gulp-jshint');
 const concat = require('gulp-concat');
 const rename = require('gulp-rename');
 const jsonminify = require('gulp-jsonminify');
-const karma = require('karma');
-const Server = karma.Server;
-const parseConfig = require('karma/lib/config').parseConfig;
-const path = require('path');
-
-// Linter
-// ------------------------------------------------------------------------------------------------------
-
-gulp.task('lint', function () {
-    return gulp
-        .src(['src/js/**/*.js', '!src/js/libs/*.js'])
-        .pipe(jshint())
-        .pipe(jshint.reporter('default'));
-});
 
 // Core
 // ------------------------------------------------------------------------------------------------------
 
 gulp.task('build_background_and_content_scripts', function () {
-    return gulp
-        .src(['src/js/background.js', 'src/js/content.js'])
-        .pipe(gulp.dest('dist/js'));
+    return gulp.src(['src/js/background.js', 'src/js/content.js']).pipe(gulp.dest('dist/js'));
 });
 
 gulp.task('build_core', gulp.series('build_background_and_content_scripts'));
@@ -50,16 +32,13 @@ gulp.task('build_options_libs', function () {
         .pipe(
             rename({
                 suffix: '.min',
-            }),
+            })
         )
         .pipe(gulp.dest('dist/js/libs'));
 });
 
 gulp.task('build_options_script', function () {
-    return gulp
-        .src(['src/js/options/**/*.js'])
-        .pipe(concat('options.js'))
-        .pipe(gulp.dest('dist/js'));
+    return gulp.src(['src/js/options/**/*.js']).pipe(concat('options.js')).pipe(gulp.dest('dist/js'));
 });
 
 gulp.task('build_options_icons', function () {
@@ -69,7 +48,7 @@ gulp.task('build_options_icons', function () {
         .pipe(
             rename({
                 suffix: '.min',
-            }),
+            })
         )
         .pipe(gulp.dest('dist/js'));
 });
@@ -85,39 +64,13 @@ gulp.task(
         'build_options_libs',
         'build_options_script',
         'build_options_html',
-        'build_options_icons',
-    ),
+        'build_options_icons'
+    )
 );
 
 // ------------------------------------------------------------------------------------------------------
 
-// gulp tests --coverage=html
-gulp.task('tests', function (done) {
-    const reporters = ['spec'];
-    const coverage_reporter = { type: 'text', dir: 'coverage/' };
-
-    if (args.coverage) {
-        reporters.push('coverage');
-
-        if (typeof args.coverage === 'string') {
-            coverage_reporter.type = args.coverage;
-        }
-    }
-
-    const configFile = path.join(__dirname, 'karma.conf.js');
-    const config = parseConfig(
-        configFile,
-        {},
-        {
-            coverageReporter: coverage_reporter,
-            promiseConfig: true,
-            throwErrors: true,
-        },
-    );
-    new Server(config, done).start();
-});
-
-gulp.task('build', gulp.series('build_core', 'build_options', 'lint'));
+gulp.task('build', gulp.series('build_core', 'build_options'));
 
 gulp.task('watch', function () {
     gulp.watch('src/**/*', gulp.series('build_core', 'build_options'));

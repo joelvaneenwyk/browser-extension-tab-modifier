@@ -1,0 +1,17 @@
+{
+  "srcDir": "src",
+  "srcFiles": ["src/**/*.?(m)js"],
+  "specDir": ".",
+  "specFiles": ["tests/**/*.model.test.?(m)js"],
+  "helpers": ["tests/helpers/**/*.?(m)js"],
+  "esmFilenameExtension": ".js",
+  "enableTopLevelAwait": false,
+  "env": {
+    "stopSpecOnExpectationFailure": false,
+    "stopOnSpecFailure": false,
+    "random": false
+  },
+  "browser": {
+    "name": "headlessChrome"
+  }
+}

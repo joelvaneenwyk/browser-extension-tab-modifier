@@ -65,7 +65,7 @@ module.exports = {
         'spaced-comment': OFF,
 
         //
-        // $ npx eslint-config-prettier karma.conf.js
+        // $ npx eslint-config-prettier "src/js/background.js"
         //
         //-----------------------------------------------------------------------
         // The following rules are unnecessary or might conflict with Prettier:
