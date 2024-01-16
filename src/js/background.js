@@ -1,4 +1,6 @@
-/*jshint esversion: 6, loopfunc: true */
+/**
+ * Background processing script for tab modification extension.
+ */
 
 const options_url = chrome.extension.getURL('html/options.html');
 
