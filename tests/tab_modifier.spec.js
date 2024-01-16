@@ -1,39 +1,40 @@
-describe('TabModifier model', function () {
-    beforeEach(module('TabModifier'));
+import { module } from 'angular';
+import fixtureTabModifier from './fixtures/tab_modifier.json';
+import fixtureOldSettings from './fixtures/old_settings.json';
+import { test, expect } from '@playwright/test';
+
+test.describe('TabModifier model', function () {
+    test.beforeEach(module('TabModifier'));
 
     let TabModifier;
     let Rule;
 
-    jasmine.getJSONFixtures().fixturesPath = 'base/tests/fixtures';
+    test.beforeEach(
+        test.inject(function (_TabModifier_, _Rule_) {
+            TabModifier = _TabModifier_;
+            Rule = _Rule_;
+        })
+    );
 
-    beforeEach(inject(function (_TabModifier_, _Rule_) {
-        TabModifier = _TabModifier_;
-        Rule = _Rule_;
-    }));
-
-    it('Create a tab modifier', function () {
+    test.it('Create a tab modifier', function () {
         const tab_modifier = new TabModifier();
 
         expect(tab_modifier instanceof TabModifier).toBe(true);
-        expect(tab_modifier.settings.enable_new_version_notification).toBe(
-            false,
-        );
+        expect(tab_modifier.settings.enable_new_version_notification).toBe(false);
         expect(tab_modifier.rules).toBeEmptyArray();
     });
 
-    it('Modify a tab modifier', function () {
+    test.it('Modify a tab modifier', function () {
         const tab_modifier = new TabModifier();
 
         tab_modifier.setModel({
             settings: { enable_new_version_notification: true },
         });
 
-        expect(tab_modifier.settings.enable_new_version_notification).toBe(
-            true,
-        );
+        expect(tab_modifier.settings.enable_new_version_notification).toBe(true);
     });
 
-    it('Add a rule', function () {
+    test.it('Add a rule', function () {
         const tab_modifier = new TabModifier();
 
         tab_modifier.addRule(new Rule());
@@ -42,7 +43,7 @@ describe('TabModifier model', function () {
         expect(tab_modifier.rules[0] instanceof Rule).toBe(true);
     });
 
-    it('Remove a rule', function () {
+    test.it('Remove a rule', function () {
         const tab_modifier = new TabModifier();
 
         tab_modifier.addRule(new Rule());
@@ -55,7 +56,7 @@ describe('TabModifier model', function () {
         expect(tab_modifier.rules).toBeArrayOfSize(1);
     });
 
-    it('Save a rule (create)', function () {
+    test.it('Save a rule (create)', function () {
         const tab_modifier = new TabModifier();
 
         tab_modifier.save(new Rule());
@@ -63,7 +64,7 @@ describe('TabModifier model', function () {
         expect(tab_modifier.rules).toBeArrayOfSize(1);
     });
 
-    it('Save a rule (update)', function () {
+    test.it('Save a rule (update)', function () {
         const tab_modifier = new TabModifier();
 
         tab_modifier.save(new Rule());
@@ -73,12 +74,12 @@ describe('TabModifier model', function () {
         expect(tab_modifier.rules[0].name).toBe('updated rule');
     });
 
-    it('Build rules', function () {
+    test.it('Build rules', function () {
         const tab_modifier = new TabModifier();
 
         tab_modifier.save(new Rule());
 
-        tab_modifier.build(getJSONFixture('tab_modifier.json'));
+        tab_modifier.build(fixtureTabModifier);
 
         expect(tab_modifier.rules).toBeArrayOfSize(7);
 
@@ -108,9 +109,7 @@ describe('TabModifier model', function () {
         expect(tab_modifier.rules[2].detection).toBe('CONTAINS');
         expect(tab_modifier.rules[2].url_fragment).toBe('youtube.com');
         expect(tab_modifier.rules[2].tab.title).toBe(null);
-        expect(tab_modifier.rules[2].tab.icon).toBe(
-            'https://www.google.com/favicon.ico',
-        );
+        expect(tab_modifier.rules[2].tab.icon).toBe('https://www.google.com/favicon.ico');
         expect(tab_modifier.rules[2].tab.pinned).toBe(true);
         expect(tab_modifier.rules[2].tab.protected).toBe(false);
         expect(tab_modifier.rules[2].tab.unique).toBe(false);
@@ -130,9 +129,7 @@ describe('TabModifier model', function () {
 
         expect(tab_modifier.rules[4].name).toBe('Unique GMail');
         expect(tab_modifier.rules[4].detection).toBe('STARTS');
-        expect(tab_modifier.rules[4].url_fragment).toBe(
-            'https://mail.google.com',
-        );
+        expect(tab_modifier.rules[4].url_fragment).toBe('https://mail.google.com');
         expect(tab_modifier.rules[4].tab.title).toBe(null);
         expect(tab_modifier.rules[4].tab.icon).toBe(null);
         expect(tab_modifier.rules[4].tab.pinned).toBe(false);
@@ -161,39 +158,27 @@ describe('TabModifier model', function () {
         expect(tab_modifier.rules[6].tab.protected).toBe(false);
         expect(tab_modifier.rules[6].tab.unique).toBe(false);
         expect(tab_modifier.rules[6].tab.muted).toBe(false);
-        expect(tab_modifier.rules[6].tab.url_matcher).toBe(
-            'github[.]com/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)',
-        );
+        expect(tab_modifier.rules[6].tab.url_matcher).toBe('github[.]com/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)');
     });
 
-    it('Sync data', function () {
-        pending();
+    test.it('Sync data', function () {
+        test.pending();
     });
 
-    it('Check file before import', function () {
+    test.it('Check file before import', function () {
         const tab_modifier = new TabModifier();
 
-        expect(
-            tab_modifier.checkFileBeforeImport(
-                JSON.stringify(getJSONFixture('old_settings.json')),
-            ),
-        ).toBe('INVALID_SETTINGS');
-        expect(tab_modifier.checkFileBeforeImport(null)).toBe(
-            'INVALID_JSON_FORMAT',
-        );
-        expect(
-            tab_modifier.checkFileBeforeImport(
-                JSON.stringify(getJSONFixture('tab_modifier.json')),
-            ),
-        ).toBe(true);
+        expect(tab_modifier.checkFileBeforeImport(JSON.stringify(fixtureOldSettings))).toBe('INVALID_SETTINGS');
+        expect(tab_modifier.checkFileBeforeImport(null)).toBe('INVALID_JSON_FORMAT');
+        expect(tab_modifier.checkFileBeforeImport(JSON.stringify(fixtureTabModifier))).toBe(true);
         expect(tab_modifier.checkFileBeforeImport()).toBe(false);
     });
 
-    it('Export file', function () {
-        pending();
+    test.it('Export file', function () {
+        test.pending();
     });
 
-    it('Delete all rules', function () {
+    test.it('Delete all rules', function () {
         const tab_modifier = new TabModifier();
 
         tab_modifier.addRule(new Rule());

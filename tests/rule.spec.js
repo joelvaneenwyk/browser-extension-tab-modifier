@@ -1,20 +1,25 @@
-describe('Rule model', function () {
-    beforeEach(module('TabModifier'));
+import { module } from 'angular';
+const { test, expect } = require('@playwright/test');
 
-    var Rule;
+test.describe('Rule model', function () {
+    test.beforeEach(module('TabModifier'));
 
-    beforeEach(inject(function (_Rule_) {
-        Rule = _Rule_;
-    }));
+    let Rule;
 
-    it('Create a rule', function () {
-        var rule = new Rule();
+    test.beforeEach(
+        test.inject(function (_Rule_) {
+            Rule = _Rule_;
+        })
+    );
+
+    test.it('Create a rule', function () {
+        const rule = new Rule();
 
         expect(rule instanceof Rule).toBe(true);
     });
 
-    it('Modify a rule', function () {
-        var rule = new Rule();
+    test.it('Modify a rule', function () {
+        const rule = new Rule();
 
         rule.setModel({ name: 'Hello' });
 
