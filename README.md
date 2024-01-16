@@ -4,8 +4,7 @@
 
 Take control of your tabs.
 
-[![Build Status](http://img.shields.io/travis/sylouuu/chrome-tab-modifier.svg?style=flat)](https://travis-ci.org/sylouuu/chrome-tab-modifier)
-[![devDependency Status](http://img.shields.io/david/dev/sylouuu/chrome-tab-modifier.svg?style=flat)](https://david-dm.org/sylouuu/chrome-tab-modifier#info=devDependencies)
+[![NodeJS with Gulp](https://github.com/joelvaneenwyk/web-extension-tab-modifier/actions/workflows/npm-gulp.yml/badge.svg)](https://github.com/joelvaneenwyk/web-extension-tab-modifier/actions/workflows/npm-gulp.yml)
 
 ## Features
 
