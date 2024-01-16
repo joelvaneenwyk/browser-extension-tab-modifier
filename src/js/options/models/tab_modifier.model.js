@@ -1,93 +1,102 @@
-app.factory('TabModifier', ['Rule', function (Rule) {
-    
-    var TabModifier = function (properties) {
-        this.settings = {
-            enable_new_version_notification: false
+app.factory('TabModifier', [
+    'Rule',
+    function (Rule) {
+        const tab_modifier = function (properties) {
+            this.settings = {
+                enable_new_version_notification: false,
+            };
+            this.rules = [];
+
+            angular.extend(this, properties);
         };
-        this.rules    = [];
-        
-        angular.extend(this, properties);
-    };
-    
-    TabModifier.prototype.setModel = function (obj) {
-        angular.extend(this, obj);
-    };
-    
-    TabModifier.prototype.addRule = function (rule) {
-        this.rules.push(rule);
-    };
-    
-    TabModifier.prototype.removeRule = function (rule) {
-        this.rules.splice(this.rules.indexOf(rule), 1);
-    };
-    
-    TabModifier.prototype.save = function (rule, index) {
-        if (index === null || index === undefined) {
-            this.addRule(rule);
-        } else {
-            this.rules[index] = rule;
-        }
-    };
 
-    TabModifier.prototype.build = function (data, replace_existing_rules) {
-        replace_existing_rules = typeof replace_existing_rules !== 'undefined' ? replace_existing_rules : true;
-        var self = this;
-        
-        if (data.settings !== undefined) {
-            this.settings = data.settings;
-        }
+        tab_modifier.prototype.setModel = function (obj) {
+            angular.extend(this, obj);
+        };
 
-        if (replace_existing_rules === true) {
-            this.deleteRules();
-        }
+        tab_modifier.prototype.addRule = function (rule) {
+            this.rules.push(rule);
+        };
 
-        angular.forEach(data.rules, function (rule) {
-            self.addRule(new Rule(rule));
-        });
-    };
-    
-    TabModifier.prototype.sync = function () {
-        chrome.storage.local.set({ tab_modifier: this });
-    };
-    
-    TabModifier.prototype.checkFileBeforeImport = function (json) {
-        if (json !== undefined) {
-            try {
-                var settings = JSON.parse(json);
-                
-                if ('rules' in settings === false) {
-                    return 'INVALID_SETTINGS';
-                }
-            } catch (e) {
-                return 'INVALID_JSON_FORMAT';
+        tab_modifier.prototype.removeRule = function (rule) {
+            this.rules.splice(this.rules.indexOf(rule), 1);
+        };
+
+        tab_modifier.prototype.save = function (rule, index) {
+            if (index === null || index === undefined) {
+                this.addRule(rule);
+            } else {
+                this.rules[index] = rule;
             }
-            
-            return true;
-        } else {
-            return false;
-        }
-    };
+        };
 
-    TabModifier.prototype.import = function (json, replace_existing_rules) {
-        replace_existing_rules = typeof replace_existing_rules !== 'undefined' ? replace_existing_rules : true;
+        tab_modifier.prototype.build = function (data, replace_existing_rules) {
+            replace_existing_rules =
+                typeof replace_existing_rules !== 'undefined'
+                    ? replace_existing_rules
+                    : true;
+            const that = this;
 
-        this.build(JSON.parse(json), replace_existing_rules);
-        
-        return this;
-    };
-    
-    TabModifier.prototype.export = function () {
-        var blob = new Blob([JSON.stringify(this, null, 4)], { type: 'text/plain' });
-        
-        return (window.URL || window.webkitURL).createObjectURL(blob);
-    };
-    
-    TabModifier.prototype.deleteRules = function () {
-        this.setModel({ rules: [] });
-        
-        return this;
-    };
-    
-    return TabModifier;
-    
-}]);
+            if (data.settings !== undefined) {
+                this.settings = data.settings;
+            }
+
+            if (replace_existing_rules === true) {
+                this.deleteRules();
+            }
+
+            angular.forEach(data.rules, function (rule) {
+                that.addRule(new Rule(rule));
+            });
+        };
+
+        tab_modifier.prototype.sync = function () {
+            chrome.storage.local.set({ tab_modifier: this });
+        };
+
+        tab_modifier.prototype.checkFileBeforeImport = function (json) {
+            if (json !== undefined) {
+                try {
+                    const settings = JSON.parse(json);
+
+                    if ('rules' in settings === false) {
+                        return 'INVALID_SETTINGS';
+                    }
+                } catch (e) {
+                    return 'INVALID_JSON_FORMAT';
+                }
+
+                return true;
+            } else {
+                return false;
+            }
+        };
+
+        tab_modifier.prototype.import = function (json, replace_existing_rules) {
+            replace_existing_rules =
+                typeof replace_existing_rules !== 'undefined'
+                    ? replace_existing_rules
+                    : true;
+
+            this.build(JSON.parse(json), replace_existing_rules);
+
+            return this;
+        };
+
+        tab_modifier.prototype.export = function () {
+            const blob = new Blob([JSON.stringify(this, null, 4)], {
+                type: 'text/plain',
+            });
+
+            return (window.URL || window.webkitURL).createObjectURL(blob);
+        };
+
+        tab_modifier.prototype.deleteRules = function () {
+            this.setModel({ rules: [] });
+
+            return this;
+        };
+
+        return tab_modifier;
+    },
+]);

@@ -1,0 +1,110 @@
+{
+  "[javascript]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "modificationsIfAvailable",
+    "editor.maxTokenizationLineLength": 2500
+  },
+  "[javascript][json][json5][jsonc]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  },
+  "[json][jsonc][json5]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "modificationsIfAvailable",
+    "editor.maxTokenizationLineLength": 2500
+  },
+  "angular.trace.server": "messages",
+  "cSpell.customDictionaries": {
+    "custom-dictionary-workspace": {
+      "addWords": true,
+      "name": "custom-dictionary-workspace",
+      "path": "${workspaceFolder:web-extension-tab-modifier}/.cspell/custom-dictionary-workspace.txt",
+      "scope": "workspace"
+    }
+  },
+  "cSpell.words": [
+    "camelcase",
+    "hcbgadmbdkiilgpifjgcakjehmafcjai",
+    "iife",
+    "jsonminify",
+    "linebreak",
+    "nonwords",
+    "semistandard"
+  ],
+  "eslint.codeActionsOnSave.mode": "all",
+  "files.autoSave": "afterDelay",
+  "jest.autoRun": "off",
+  "jest.testExplorer": {
+    "enable": false
+  },
+  "jestrunner.codeLens": [],
+  "jestrunner.codeLensSelector": "",
+  "playwright.env": {
+    "headless": true
+  },
+  "playwright.reuseBrowser": false,
+  "prettier.enable": true,
+  "python.testing.autoTestDiscoverOnSaveEnabled": false,
+  "python.testing.promptToConfigure": false,
+  "python.testing.pytestEnabled": false,
+  "python.testing.unittestEnabled": false,
+  "search.exclude": {
+    "**/.pnp.*": true,
+    "**/.yarn": true
+  },
+  "taskExplorer.autoRefresh": true,
+  "taskExplorer.clickAction": "Open",
+  "taskExplorer.debug": true,
+  "taskExplorer.debugLevel": 4,
+  "taskExplorer.enabledTasks": {
+    "ant": false,
+    "appPublisher": false,
+    "composer": false,
+    "gradle": false,
+    "grunt": false,
+    "gulp": true,
+    "make": false,
+    "maven": false,
+    "npm": true,
+    "nsis": false,
+    "perl": false,
+    "pipenv": false,
+    "python": false,
+    "ruby": false,
+    "workspace": true
+  },
+  "taskExplorer.enableSideBar": true,
+  "taskExplorer.exclude": [
+    "**/.vscode-test/**",
+    "**/node_modules/**",
+    "**/.yarn/cache/**",
+    "**/.yarn/unplugged/**",
+    "**/dist/**"
+  ],
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true
+  },
+  "taskExplorer.showExecuteWithArgumentsButton": false,
+  "taskExplorer.useGulp": true,
+  "testExplorer.addToEditorContextMenu": false,
+  "testExplorer.onReload": null,
+  "testExplorer.onStart": null,
+  "testExplorer.showOnRun": true,
+  "testExplorer.sort": "byLocation",
+  "testExplorer.useNativeTesting": true,
+  "testing.alwaysRevealTestOnStateChange": true
+}

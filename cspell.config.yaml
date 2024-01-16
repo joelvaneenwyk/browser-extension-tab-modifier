@@ -1,0 +1,12 @@
+version: '0.2'
+ignorePaths: []
+dictionaryDefinitions:
+  - name: web-extension
+    path: ./.cspell/custom-dictionary-workspace.txt
+dictionaries:
+  - javascript
+  - markdown
+  - node
+words: []
+ignoreWords: []
+import: []

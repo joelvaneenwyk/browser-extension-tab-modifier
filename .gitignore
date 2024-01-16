@@ -1,3 +1,20 @@
-.idea
+#
+# Ignore file for web extensions
+#
+
 node_modules/
+
 coverage/
+
+.pnp.cjs
+.pnp.loader.mjs
+
+# Test results
+.pytest_cache/
+test-results/
+playwright-report/
+playwright/.cache/
+blob-report/
+test-output.xml
+test-results.*
+results.xml

@@ -1,0 +1,11 @@
+# Custom Dictionary Words
+characterresponse
+esversion
+ezgif
+imgur
+joelvaneenwyk
+jsonlint
+loopfunc
+preprod
+PREPROD
+sylouuu

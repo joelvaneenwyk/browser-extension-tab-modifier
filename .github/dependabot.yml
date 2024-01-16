@@ -1,0 +1,15 @@
+#
+# Dependabot version updates for NPM packages and GitHub Actions
+#
+
+version: 2
+updates:
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'daily'
+
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'daily'
