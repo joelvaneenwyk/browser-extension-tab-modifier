@@ -68,6 +68,10 @@
   ],
   "karmaTestExplorer.testFramework": "jasmine",
   "prettier.enable": true,
+  "python.testing.autoTestDiscoverOnSaveEnabled": false,
+  "python.testing.promptToConfigure": false,
+  "python.testing.pytestEnabled": false,
+  "python.testing.unittestEnabled": false,
   "search.exclude": {
     "**/.pnp.*": true,
     "**/.yarn": true
@@ -75,7 +79,7 @@
   "taskExplorer.autoRefresh": true,
   "taskExplorer.clickAction": "Open",
   "taskExplorer.debug": true,
-  "taskExplorer.debugLevel": 3,
+  "taskExplorer.debugLevel": 4,
   "taskExplorer.enabledTasks": {
     "ant": false,
     "appPublisher": false,
@@ -91,7 +95,6 @@
     "pipenv": false,
     "python": false,
     "ruby": false,
-    "tsc": false,
     "workspace": true
   },
   "taskExplorer.enableSideBar": true,
@@ -102,11 +105,13 @@
     "**/.yarn/unplugged/**",
     "**/dist/**"
   ],
+  "taskExplorer.showExecuteWithArgumentsButton": false,
   "taskExplorer.useGulp": true,
   "testExplorer.addToEditorContextMenu": false,
   "testExplorer.onReload": null,
   "testExplorer.onStart": null,
   "testExplorer.showOnRun": true,
   "testExplorer.sort": "byLocation",
-  "testExplorer.useNativeTesting": true
+  "testExplorer.useNativeTesting": true,
+  "testing.alwaysRevealTestOnStateChange": true
 }
