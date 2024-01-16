@@ -48,7 +48,10 @@
   },
   "jestrunner.codeLens": [],
   "jestrunner.codeLensSelector": "",
-  "playwright.reuseBrowser": true,
+  "playwright.env": {
+    "headless": true
+  },
+  "playwright.reuseBrowser": false,
   "prettier.enable": true,
   "python.testing.autoTestDiscoverOnSaveEnabled": false,
   "python.testing.promptToConfigure": false,
