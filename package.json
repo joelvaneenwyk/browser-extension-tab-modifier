@@ -15,8 +15,7 @@
     "build": "npm exec gulp build",
     "lint": "npm exec eslint \"*.js\" \"src/**/*.js\"",
     "lint:fix": "npm exec eslint \"*.js\" \"src/**/*.js\" --fix",
-    "test": "jasmine-browser-runner runSpecs",
-    "test:jasmine": "jasmine-browser-runner runSpecs",
+    "test": "npx playwright test",
     "test:web": "web-test-runner tests/**/*.test.js --node-resolve --playwright",
     "watch": "npm exec gulp watch",
     "upgrade": "npx npm-check-updates -u"
@@ -25,7 +24,7 @@
     "singleQuote": true,
     "quoteProps": "consistent"
   },
-  "dependencies": {
+  "devDependencies": {
     "angular": "1.8.3",
     "angular-animate": "1.8.3",
     "angular-aria": "1.8.3",
@@ -36,10 +35,7 @@
     "angular-route": "1.8.3",
     "angular-ui-tree": "^2.22.6",
     "chromedriver": "120.0.1",
-    "jasmine": "5.1.0",
-    "playwright": "1.41.0"
-  },
-  "devDependencies": {
+    "playwright": "1.41.0",
     "@playwright/test": "^1.41.0",
     "@types/gulp": "^4.0.17",
     "@types/node": "^20.11.4",
@@ -51,16 +47,13 @@
     "eslint-config-semistandard": "17.0.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-n": "^15.0.0",
     "eslint-plugin-promise": "^6.1.1",
     "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
     "gulp-jsonminify": "^1.1.0",
     "gulp-minify-html": "^1.0.6",
     "gulp-rename": "^2.0.0",
-    "gulp-uglify": "^3.0.2",
-    "jasmine-browser-runner": "^2.3.0",
-    "jasmine-core": "^5.1.1",
-    "playwright": "^1.40.1"
+    "gulp-uglify": "^3.0.2"
   }
 }
