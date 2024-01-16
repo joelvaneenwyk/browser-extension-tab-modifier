@@ -15,7 +15,7 @@
     "build": "npm exec gulp build",
     "lint": "npm exec eslint \"*.js\" \"src/**/*.js\"",
     "lint:fix": "npm exec eslint \"*.js\" \"src/**/*.js\" --fix",
-    "test": "npx playwright test",
+    "test": "npm exec playwright test",
     "watch": "npm exec gulp watch",
     "upgrade": "npx npm-check-updates -u"
   },
