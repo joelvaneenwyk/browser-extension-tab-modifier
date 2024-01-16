@@ -16,7 +16,6 @@
     "lint": "npm exec eslint \"*.js\" \"src/**/*.js\"",
     "lint:fix": "npm exec eslint \"*.js\" \"src/**/*.js\" --fix",
     "test": "npx playwright test",
-    "test:web": "web-test-runner tests/**/*.test.js --node-resolve --playwright",
     "watch": "npm exec gulp watch",
     "upgrade": "npx npm-check-updates -u"
   },
@@ -39,8 +38,6 @@
     "@playwright/test": "^1.41.0",
     "@types/gulp": "^4.0.17",
     "@types/node": "^20.11.4",
-    "@web/test-runner": "^0.18.0",
-    "@web/test-runner-playwright": "^0.11.0",
     "coverage": "^0.4.1",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",

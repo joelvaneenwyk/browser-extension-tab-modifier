@@ -9,10 +9,12 @@ coverage/
 .pnp.cjs
 .pnp.loader.mjs
 
-test-output.xml
-
+# Test results
 .pytest_cache/
-/test-results/
-/playwright-report/
-/blob-report/
-/playwright/.cache/
+test-results/
+playwright-report/
+playwright/.cache/
+blob-report/
+test-output.xml
+test-results.*
+results.xml

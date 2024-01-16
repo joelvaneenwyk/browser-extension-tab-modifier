@@ -4,4 +4,4 @@
 npm uninstall -f -g karma-cli karma-jasmine jasmine jasmine-core
 npm cache clean -f
 
-npx playwright install --with-deps chromium msedge
+npx playwright install --with-deps chromium
